@@ -41,5 +41,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return session;
     },
   },
-  pages: { signIn: "/api/auth/signin" },
+  // 2026-08-12 移除 pages.signIn：
+  //   原本設成 "/api/auth/signin"，但那正是 next-auth 內建登入頁的路徑。
+  //   把「自訂登入頁」指向內建登入頁自己 → 它要顯示登入頁時就跳到自己 →
+  //   無限迴圈，瀏覽器顯示 ERR_TOO_MANY_REDIRECTS。
+  //   專案沒有自製登入頁，維持預設（不覆寫）就會用內建那頁。
 });
