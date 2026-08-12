@@ -1,0 +1,13 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "realtor-site",
+      "url": "http://localhost:5173"
+    },
+    {
+      "name": "booking-system",
+      "url": "http://localhost:3000"
+    }
+  ]
+}

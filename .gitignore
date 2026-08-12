@@ -1,0 +1,18 @@
+# ── macOS
+.DS_Store
+
+# ── 課程教材：別人的付費內容 + 第三方安裝檔，不可公開散布
+08【當天安裝】/
+
+# ── Claude Code 的工作記憶：會累積客戶、價格、內部決策，不進版控
+.claude/memory/
+.claude/settings.local.json
+
+# ── 舊的獨立靜態站（已整合進 booking-system/src/app/page.tsx，保留在本機備查）
+realtor-website/
+
+# ── 環境變數（各專案自己的 .gitignore 也有擋，這裡再保一層）
+.env
+.env.local
+.env*.local
+.env.production

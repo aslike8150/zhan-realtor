@@ -1,0 +1,450 @@
+:root {
+  --twh-primary: #FF7403;
+  --twh-primary-dark: #C35B07;
+  --twh-primary-light: #FFF0E5;
+  --twh-white: #FFFFFF;
+
+  --twh-accent-red: #E84A1B;
+  --twh-text: #3B261B;
+  --twh-text-muted: #746158;
+  --twh-border: #F0D2BF;
+
+  --max-width: 1140px;
+  --radius: 16px;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--twh-text);
+  background: var(--twh-white);
+  line-height: 1.7;
+}
+
+img { max-width: 100%; display: block; }
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 15px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.btn:hover { transform: translateY(-2px); }
+
+.btn--primary {
+  background: var(--twh-primary);
+  color: var(--twh-white);
+  box-shadow: 0 8px 20px rgba(255, 116, 3, 0.3);
+}
+.btn--primary:hover { background: var(--twh-primary-dark); }
+
+.btn--outline {
+  border-color: var(--twh-primary);
+  color: var(--twh-primary-dark);
+  background: var(--twh-white);
+}
+.btn--outline:hover { background: var(--twh-primary-light); }
+
+.btn--outline-light {
+  border-color: rgba(255,255,255,0.5);
+  color: var(--twh-white);
+  background: transparent;
+}
+.btn--outline-light:hover { background: rgba(255,255,255,0.12); }
+
+.btn--sm { padding: 10px 20px; font-size: 14px; }
+.btn--full { width: 100%; }
+
+.btn--line {
+  background: #06C755;
+  color: var(--twh-white);
+}
+.btn--line:hover { background: #05a648; }
+.btn--line__icon {
+  font-size: 12px;
+  font-weight: 800;
+  border: 1.5px solid rgba(255,255,255,0.8);
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+
+/* Nav */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--twh-border);
+}
+.nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+.nav__brand {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--twh-text);
+}
+.nav__brand span {
+  font-weight: 400;
+  font-size: 13px;
+  color: var(--twh-text-muted);
+  margin-left: 6px;
+}
+.nav__links {
+  display: flex;
+  gap: 28px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--twh-text-muted);
+}
+.nav__links a:hover { color: var(--twh-primary); }
+
+@media (max-width: 720px) {
+  .nav__links { display: none; }
+}
+
+/* Eyebrow / titles */
+.eyebrow {
+  color: var(--twh-primary-dark);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  font-size: 14px;
+  margin: 0 0 8px;
+}
+.eyebrow--center { text-align: center; }
+.eyebrow--light { color: var(--twh-primary-light); }
+
+.section-title {
+  font-size: clamp(26px, 4vw, 34px);
+  font-weight: 800;
+  margin: 0 0 40px;
+  color: var(--twh-text);
+}
+.section-title--light { color: var(--twh-white); }
+
+section > .container > .section-title,
+section > .container > .eyebrow--center {
+  text-align: center;
+}
+
+/* Hero */
+.hero {
+  background: linear-gradient(180deg, var(--twh-primary-light) 0%, var(--twh-white) 100%);
+  padding: 72px 0 88px;
+}
+.hero__inner {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  gap: 40px;
+  align-items: end;
+}
+.hero__photo-wrap {
+  position: relative;
+  width: 100%;
+  min-height: 440px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.hero__photo {
+  width: 100%;
+  max-height: 560px;
+  object-fit: contain;
+  object-position: bottom;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(59, 38, 27, 0.18);
+}
+.hero__photo-fallback-text {
+  display: none;
+  position: absolute;
+  inset: 0;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 16px;
+  color: var(--twh-text-muted);
+  font-size: 14px;
+  background: var(--twh-primary-light);
+  border-radius: 24px;
+  border: 2px dashed var(--twh-border);
+}
+.hero__photo-wrap--fallback { min-height: 380px; }
+.hero__photo-wrap--fallback .hero__photo { display: none; }
+.hero__photo-wrap--fallback .hero__photo-fallback-text { display: flex; }
+.hero__photo-fallback-text code {
+  background: var(--twh-white);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--twh-primary-dark);
+}
+
+.hero h1 {
+  font-size: clamp(36px, 5vw, 52px);
+  margin: 0 0 12px;
+  font-weight: 800;
+}
+.hero__tagline {
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--twh-primary-dark);
+  margin: 0 0 14px;
+}
+.hero__desc {
+  color: var(--twh-text-muted);
+  font-size: 16px;
+  max-width: 480px;
+  margin: 0 0 32px;
+}
+.hero__cta { display: flex; gap: 14px; flex-wrap: wrap; }
+
+@media (max-width: 860px) {
+  .hero__inner { grid-template-columns: 1fr; text-align: center; }
+  .hero__photo-wrap { max-width: 280px; margin: 0 auto; }
+  .hero__desc { margin-left: auto; margin-right: auto; }
+  .hero__cta { justify-content: center; }
+}
+
+/* Area */
+.area { padding: 88px 0; }
+.area__grid {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 40px;
+  margin-top: 8px;
+}
+.area__map-card {
+  background: var(--twh-primary-light);
+  border: 1px solid var(--twh-border);
+  border-radius: var(--radius);
+  padding: 32px 24px;
+  text-align: center;
+}
+.area__pin { font-size: 40px; margin-bottom: 12px; }
+.area__place { font-size: 22px; font-weight: 800; margin: 0 0 6px; }
+.area__org { color: var(--twh-text-muted); margin: 0; font-size: 14px; }
+
+.area__points { display: grid; gap: 24px; align-content: start; }
+.area__point h3 {
+  margin: 0 0 6px;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--twh-primary-dark);
+}
+.area__point p { margin: 0; color: var(--twh-text-muted); }
+
+@media (max-width: 720px) {
+  .area__grid { grid-template-columns: 1fr; }
+}
+
+/* Record */
+.record {
+  background: var(--twh-text);
+  padding: 88px 0;
+}
+.record__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.record__card {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: var(--radius);
+  padding: 36px 24px;
+  text-align: center;
+}
+.record__card--highlight {
+  background: var(--twh-primary);
+  border-color: var(--twh-primary);
+}
+.record__number {
+  font-size: 34px;
+  font-weight: 800;
+  color: var(--twh-white);
+  margin: 0 0 8px;
+}
+.record__number span { font-size: 18px; margin-left: 2px; }
+/* 店名比純數字長，縮小字級才不會擠成兩行擠爆卡片 */
+.record__number--brand { font-size: 24px; line-height: 1.35; }
+.record__label {
+  color: rgba(255,255,255,0.75);
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+@media (max-width: 720px) {
+  .record__grid { grid-template-columns: 1fr; }
+}
+
+/* Services */
+.services { padding: 88px 0; background: var(--twh-primary-light); }
+.services__intro,
+.record__intro {
+  max-width: 620px;
+  margin: -20px auto 44px;
+  text-align: center;
+  font-size: 16px;
+}
+.services__intro { color: var(--twh-text-muted); }
+.record__intro { color: rgba(255,255,255,0.8); }
+.services__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.service-card {
+  background: var(--twh-white);
+  border-radius: var(--radius);
+  padding: 36px 28px;
+  border: 1px solid var(--twh-border);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.service-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 30px rgba(59, 38, 27, 0.1);
+}
+.service-card__icon {
+  font-size: 32px;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--twh-primary-light);
+  border-radius: 14px;
+  margin-bottom: 18px;
+}
+.service-card h3 {
+  margin: 0 0 10px;
+  font-size: 20px;
+  font-weight: 800;
+}
+.service-card p {
+  margin: 0;
+  color: var(--twh-text-muted);
+  font-size: 15px;
+}
+
+@media (max-width: 860px) {
+  .services__grid { grid-template-columns: 1fr; }
+}
+
+/* Booking */
+.booking {
+  background: linear-gradient(135deg, var(--twh-primary-dark), var(--twh-accent-red));
+  padding: 96px 0;
+  color: var(--twh-white);
+}
+.booking__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: start;
+}
+.booking__desc {
+  color: rgba(255,255,255,0.85);
+  font-size: 16px;
+  max-width: 440px;
+  margin: 0 0 28px;
+}
+.booking__contact-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 32px;
+  display: grid;
+  gap: 10px;
+}
+.booking__contact-list li {
+  display: flex;
+  gap: 12px;
+  font-size: 15px;
+}
+.booking__contact-label {
+  font-weight: 700;
+  min-width: 84px;
+  color: rgba(255,255,255,0.7);
+}
+.booking__cta { display: flex; gap: 14px; flex-wrap: wrap; }
+
+/* 預約面板 —— 2026-08-12 取代原本的假 mailto 表單，直接導向 /card/booking */
+.booking__panel {
+  background: var(--twh-white);
+  border-radius: var(--radius);
+  padding: 32px;
+  color: var(--twh-text);
+  display: grid;
+  gap: 14px;
+}
+.booking__panel h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+}
+.booking__steps {
+  margin: 0;
+  padding-left: 20px;
+  display: grid;
+  gap: 8px;
+  color: var(--twh-text-muted);
+  font-size: 15px;
+}
+.booking__steps li::marker {
+  color: var(--twh-primary);
+  font-weight: 800;
+}
+.booking__panel-note {
+  margin: 0 0 4px;
+  font-size: 13px;
+  color: var(--twh-text-muted);
+  padding: 10px 12px;
+  background: var(--twh-primary-light);
+  border-radius: 10px;
+}
+.booking__card-link {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--twh-primary-dark);
+  margin-top: 2px;
+}
+.booking__card-link:hover { text-decoration: underline; }
+
+@media (max-width: 860px) {
+  .booking__inner { grid-template-columns: 1fr; }
+}
+
+/* Footer */
+.footer {
+  background: var(--twh-text);
+  color: rgba(255,255,255,0.7);
+  padding: 28px 0;
+  text-align: center;
+  font-size: 13.5px;
+}
+.footer__inner p { margin: 4px 0; }
