@@ -23,7 +23,7 @@ import { OWNER, SOCIAL } from "@/config/owner";
 const BINGE_EMAIL = process.env.APPOINTMENT_ADMIN_EMAIL || "your-email@example.com";
 const APPOINTMENT_BASE_URL = process.env.APPOINTMENT_BASE_URL || "https://example.com";
 const GENDER_HONOR: Record<string, string> = { male: "先生", female: "小姐" };
-const ABIN_PRIVATE_LINE_URL = "https://line.me/ti/p/~like8150";
+const ABIN_PRIVATE_LINE_URL = SOCIAL.line;
 const ABIN_OFFICE_LOCATION: MeetLocation = {
   name: OWNER.company,
   address: "台南市安平區",

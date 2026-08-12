@@ -11,10 +11,10 @@
  */
 import type { Metadata } from "next";
 import Link from "next/link";
-import { OWNER, SOCIAL, SITE_URL } from "@/config/owner";
+import { OWNER, SOCIAL, SITE_URL, LINE_ID_TEXT } from "@/config/owner";
 import "./home.css";
 
-const DESCRIPTION = `${OWNER.name}，台南安平房地產顧問，${OWNER.company}在地專業房仲。從安平區買房、資產配置到房地產稅務諮詢，提供全方位不動產顧問服務。加LINE：like8150 預約諮詢。`;
+const DESCRIPTION = `${OWNER.name}，台南安平房地產顧問，${OWNER.company}在地專業房仲。從安平區買房、資產配置到房地產稅務諮詢，提供全方位不動產顧問服務。加LINE：${LINE_ID_TEXT} 預約諮詢。`;
 
 export const metadata: Metadata = {
   title: `${OWNER.name}｜台南房地產顧問｜安平區買房・資產配置・房地產稅務諮詢｜${OWNER.company}`,
@@ -56,7 +56,7 @@ const JSON_LD = {
   name: OWNER.name,
   description: `台南安平房地產顧問，${OWNER.company}在地專業房仲，提供安平區買房、資產配置、房地產稅務諮詢等全方位不動產顧問服務。`,
   image: `${SITE_URL}${OWNER.photoUrl}`,
-  telephone: "+886-972-016-065",
+  telephone: OWNER.phone,
   areaServed: { "@type": "Place", name: "台南市安平區" },
   address: {
     "@type": "PostalAddress",
@@ -233,7 +233,7 @@ export default function HomePage() {
               <ul className="booking__contact-list">
                 <li>
                   <span className="booking__contact-label">LINE ID</span>
-                  <span>like8150</span>
+                  <span>{LINE_ID_TEXT}</span>
                 </li>
                 <li>
                   <span className="booking__contact-label">電話</span>
@@ -279,7 +279,7 @@ export default function HomePage() {
             {OWNER.name}｜台南安平房仲・{OWNER.company}
           </p>
           <p>
-            {OWNER.phone}｜LINE：like8150
+            {OWNER.phone}｜LINE：{LINE_ID_TEXT}
           </p>
         </div>
       </footer>
