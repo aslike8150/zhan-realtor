@@ -20,6 +20,7 @@ import {
   type MeetLocation,
   type OpenDay,
 } from "@/lib/appointment-constants";
+import Script from "next/script";
 import { SOCIAL, ABIN } from "../_links";
 import styles from "./Booking.module.css";
 import {
@@ -84,6 +85,38 @@ const MEET_TYPES_BY_MODE: Record<BookingMode, readonly string[]> = {
   realtor: ["office", "phone", "video", "custom"],
   interview: ["office", "video", "phone"],
 };
+
+/**
+ * Cloudflare Turnstile —— 2026-08-12 補上前台元件。
+ *
+ * 原範本只有後端驗證（create/route.ts 會檢查 turnstileToken），前台完全沒有
+ * 渲染驗證元件，也沒有送出驗證碼。結果是：一旦設了 TURNSTILE_SECRET_KEY，
+ * 每一筆預約都會被判定 turnstile_invalid 而回 400 —— 等於防機器人一開就把真客戶也擋光。
+ *
+ * 必須用「明確渲染」（turnstile.render）而不是隱式渲染：隱式渲染只在 script
+ * 載入當下掃描一次 DOM，而驗證元件位在表單最後一步、由 React 後來才插入，
+ * 掃描時根本還不存在，結果是框子永遠畫不出來、也拿不到驗證碼。
+ *
+ * 渲染後 Cloudflare 會在所屬 <form> 內插入名為 cf-turnstile-response 的
+ * 隱藏欄位存放驗證碼，送出時讀它即可。
+ *
+ * 沒設 NEXT_PUBLIC_TURNSTILE_SITE_KEY 時完全不渲染，行為與未啟用時一致。
+ */
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "";
+
+function readTurnstileToken(): string {
+  if (!TURNSTILE_SITE_KEY) return "";
+  const el = document.querySelector<HTMLInputElement>('input[name="cf-turnstile-response"]');
+  return el?.value || "";
+}
+
+/** 驗證碼是一次性的。送出失敗要重來時必須重置，否則第二次一定失敗。 */
+function resetTurnstile(widgetId: string | null): void {
+  if (!TURNSTILE_SITE_KEY) return;
+  const api = (window as unknown as { turnstile?: { reset: (id?: string) => void } }).turnstile;
+  if (widgetId) api?.reset(widgetId);
+  else api?.reset();
+}
 
 const TW_OFFSET_MS = 8 * 60 * 60_000;
 const PROFILE_KEY = "booking_profile_v2";
@@ -244,6 +277,9 @@ export default function BookingForm() {
   const [errors, setErrors] = useState<FieldErrors>({});
   const [submitError, setSubmitError] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  // Turnstile 明確渲染用：容器 ref + 已渲染旗標（避免 React 重繪時重複渲染出兩個框）
+  const turnstileRef = useRef<HTMLDivElement | null>(null);
+  const turnstileWidgetId = useRef<string | null>(null);
   const [done, setDone] = useState<DoneState | null>(null);
   const [sessionId, setSessionId] = useState("");
   const [trackingEnabled, setTrackingEnabled] = useState(false);
@@ -307,6 +343,29 @@ export default function BookingForm() {
     sync();
     window.addEventListener(TRACKING_CONSENT_CHANGED_EVENT, sync);
     return () => window.removeEventListener(TRACKING_CONSENT_CHANGED_EVENT, sync);
+  }, []);
+
+  /**
+   * Turnstile 明確渲染。
+   * 容器要等使用者走到最後一步才存在，而 Cloudflare 的 script 可能比它早或晚就緒，
+   * 所以用輪詢等「容器出現」且「script 載好」都成立才渲染，並只渲染一次。
+   */
+  useEffect(() => {
+    if (!TURNSTILE_SITE_KEY) return;
+    let stopped = false;
+    const timer = setInterval(() => {
+      if (stopped || turnstileWidgetId.current) return;
+      const api = (window as unknown as {
+        turnstile?: { render: (el: HTMLElement, opts: Record<string, unknown>) => string };
+      }).turnstile;
+      const el = turnstileRef.current;
+      if (!api || !el || el.childElementCount > 0) return;
+      turnstileWidgetId.current = api.render(el, { sitekey: TURNSTILE_SITE_KEY, language: "zh-TW" });
+    }, 300);
+    return () => {
+      stopped = true;
+      clearInterval(timer);
+    };
   }, []);
 
   useEffect(() => {
@@ -623,6 +682,9 @@ export default function BookingForm() {
           qualification: qualificationPayload,
           note: note.trim(),
           website,
+          // Cloudflare Turnstile：後端設了 TURNSTILE_SECRET_KEY 時會驗這個欄位。
+          // 隱式渲染會把驗證碼塞進表單裡名為 cf-turnstile-response 的隱藏欄位。
+          turnstileToken: readTurnstileToken(),
           funnelSessionId: trackingEnabled ? sessionId : "",
           idempotencyKey: key,
           tracking: {
@@ -646,6 +708,8 @@ export default function BookingForm() {
       });
       const data = (await response.json().catch(() => ({}))) as Record<string, unknown>;
       if (!response.ok || data.ok !== true) {
+        // Turnstile 驗證碼是一次性的，這次沒過就得換一組，否則客戶重按永遠失敗。
+        resetTurnstile(turnstileWidgetId.current);
         const message = String(data.error || "送出失敗，請稍後再試。");
         const code = String(data.code || "");
         const staleSlotCodes = new Set([
@@ -762,6 +826,13 @@ export default function BookingForm() {
 
   return (
     <main className={styles.page}>
+      {/* 只有設了 site key 才載入 Cloudflare 的 script，避免沒啟用時多打一支外部請求 */}
+      {TURNSTILE_SITE_KEY ? (
+        <Script
+          src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+          strategy="afterInteractive"
+        />
+      ) : null}
       <div className={styles.shell}>
         <header className={styles.header}>
           <div className={styles.brand}>{ABIN.name} ‧ {ABIN.company}</div>
@@ -1143,6 +1214,13 @@ export default function BookingForm() {
                   <strong>{selectedSlot?.dayLabel || activeDay?.label || ""} {formatTimeRange(selectedStart, duration)}（{durationLabel(duration)}）</strong>
                 </div>
               </div>
+
+              {/* 防機器人驗證。沒設 site key 就整塊不渲染，行為與未啟用時相同。 */}
+              {TURNSTILE_SITE_KEY ? (
+                <div className={styles.turnstile}>
+                  <div ref={turnstileRef} />
+                </div>
+              ) : null}
 
               {submitError ? <div className={styles.errorNotice} role="alert">{submitError}</div> : null}
               <button className={styles.submit} type="submit" disabled={submitting}>

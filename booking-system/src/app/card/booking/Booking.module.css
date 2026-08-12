@@ -664,3 +664,10 @@
     transition: border-color 150ms ease, background-color 150ms ease, box-shadow 150ms ease, opacity 150ms ease;
   }
 }
+
+/* Cloudflare Turnstile 驗證元件容器（2026-08-12 補上前台元件時新增） */
+.turnstile {
+  display: flex;
+  justify-content: center;
+  margin: 4px 0 2px;
+}
