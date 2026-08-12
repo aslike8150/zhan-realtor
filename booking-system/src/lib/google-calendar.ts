@@ -23,8 +23,14 @@ const TOKEN_URL = "https://oauth2.googleapis.com/token";
 const AUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth";
 const CAL_API = "https://www.googleapis.com/calendar/v3";
 
-const CLIENT_ID = process.env.GOOGLE_CALENDAR_CLIENT_ID || process.env.AUTH_GOOGLE_ID || "";
-const CLIENT_SECRET = process.env.GOOGLE_CALENDAR_CLIENT_SECRET || process.env.AUTH_GOOGLE_SECRET || "";
+// 2026-08-12：拿掉回退到 AUTH_GOOGLE_* 的行為。
+//   原本寫 `GOOGLE_CALENDAR_CLIENT_ID || AUTH_GOOGLE_ID`，把「後台登入用的 OAuth 憑證」
+//   當成「行事曆整合憑證」。後果：只要為了開通後台登入而設了 AUTH_GOOGLE_*，
+//   isGoogleConfigured() 就變 true，但行事曆從未綁定（沒有 refresh token），
+//   getBusyRangesStrict 因而拋 not_bound，前台整個不開放選時段 —— 開通後台反而弄壞預約。
+//   兩者用途不同，要用行事曆整合就明確設定 GOOGLE_CALENDAR_*（值可以和 AUTH_ 相同）。
+const CLIENT_ID = process.env.GOOGLE_CALENDAR_CLIENT_ID || "";
+const CLIENT_SECRET = process.env.GOOGLE_CALENDAR_CLIENT_SECRET || "";
 // 2026-08-12：fallback 由寫死的 example.com 改為 SITE_URL（會自動採用 Vercel 正式網域）
 const BASE_URL = SITE_URL;
 export const GOOGLE_REDIRECT_URI = `${BASE_URL}/api/appointment/google/callback`;
