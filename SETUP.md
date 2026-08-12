@@ -155,6 +155,43 @@ Deployments 頁手動 **Redeploy**。
 
 ---
 
+## 踩過的坑（重設資料庫密碼時必看）
+
+### TiDB 的連線字串不能「複製既有的」，一定要重新產生
+
+TiDB **無法讀回現有密碼**。Connect 對話框在兩種狀態下畫面不同：
+
+| 狀態 | 畫面 |
+|---|---|
+| 從未產生過密碼 | 明確寫 "You don't have a password yet"，Generate Password 很顯眼 |
+| 已經有密碼 | 密碼欄位顯示 `<PASSWORD>` 佔位符，按鈕不明顯 |
+
+**第二種狀態下直接複製連線字串，複製到的是字面上的 `<PASSWORD>` 這串文字**，
+不是真的密碼。貼進 Vercel 後的症狀是：
+
+```
+Authentication failed against database server,
+the provided database credentials for `xxx.root` are not valid.
+```
+
+網站首頁與名片頁正常，但預約頁顯示「目前無法讀取可預約時段」。
+
+**正確做法**：每次要拿連線字串，都必須按一次 **Generate Password**
+（等於重設密碼），然後立刻貼進 Vercel。中途不要再打開 Connect 對話框，
+因為再按一次 Generate 會讓剛貼上的那組立刻失效。
+
+### 對話框每次都會重置成 `sys`
+
+Database 欄位預設是 `sys`（MySQL 系統資料庫），程式沒有權限在裡面建表。
+每次打開都要手動改成 **`test`**，並確認字串結尾是 `/test?sslaccept=strict`。
+
+### 改環境變數不會自動重新部署
+
+Vercel 只在 GitHub 有新 commit 時自動部署。**只改環境變數的話**要自己去
+Deployments 頁按 **Redeploy**（畫面通常會跳出提示，照著點即可）。
+
+---
+
 ## 尚未完成的項目
 
 - **防機器人（Turnstile）**：未設定。網址公開流傳前建議補上，否則可能收到大量假預約。
