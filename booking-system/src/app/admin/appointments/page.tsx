@@ -1,4 +1,5 @@
-import { isCurrentUserAdmin } from "@/lib/admin-check";
+import { redirect } from "next/navigation";
+import { isCurrentUserAdmin, getAdminCheckArgs } from "@/lib/admin-check";
 import {
   intentEmoji,
   intentLabel,
@@ -299,7 +300,13 @@ export default async function AppointmentsAdminPage({
 }: {
   searchParams: Promise<SearchParams>;
 }) {
-  if (!(await isCurrentUserAdmin())) throw new Error("權限不足");
+  // 2026-08-12：原本一律 throw，未登入時畫面是 500 錯誤頁，看不出「要先登入」。
+  // 改成：沒登入 → 導去登入頁；登入了但不在白名單 → 才顯示明確的拒絕訊息。
+  const { email } = await getAdminCheckArgs();
+  if (!email) redirect("/api/auth/signin?callbackUrl=/admin/appointments");
+  if (!(await isCurrentUserAdmin())) {
+    throw new Error(`權限不足：${email} 不在後台白名單內。請確認 Vercel 的 ADMIN_EMAILS 有包含這個信箱。`);
+  }
 
   const sp = await searchParams;
   const queue = QUEUES.some((item) => item.key === sp.queue) ? (sp.queue as AppointmentQueue) : "all";
