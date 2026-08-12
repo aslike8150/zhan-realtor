@@ -48,5 +48,17 @@ export const LINE_ID_TEXT = LINE_ID;
 /** LINE 加好友 QR 圖（放 public/card/ 底下）。null = 不顯示 QR 區 */
 export const LINE_QR: string | null = null;
 
-/** 網站網址（通知信裡的連結、Open Graph 用） */
-export const SITE_URL = process.env.APPOINTMENT_BASE_URL || "http://localhost:3000";
+/**
+ * 網站網址（通知信裡的連結、Open Graph、JSON-LD 用）
+ *
+ * 優先序：手動設定 > Vercel 正式網域 > 本次部署網址 > 本機。
+ * 中間兩個是 Vercel 自動注入的，所以第一次部署不用先知道網址就能正確運作
+ * （否則會變成「要填網址才能部署，但要部署完才知道網址」的死結）。
+ */
+export const SITE_URL =
+  process.env.APPOINTMENT_BASE_URL ||
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : "http://localhost:3000");
