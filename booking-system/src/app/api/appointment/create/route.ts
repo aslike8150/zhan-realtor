@@ -1,5 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { NextRequest, NextResponse } from "next/server";
+import { SITE_URL } from "@/config/owner";
 import {
   AppointmentIdempotencyConflictError,
   AppointmentLocationApprovalError,
@@ -53,7 +54,8 @@ import {
 export const dynamic = "force-dynamic";
 
 // 2026-08-06 移除：重複防呆的視窗改由後台設定（getAppointmentRateLimitSettings().duplicateWindowMin）
-const BASE_URL = (process.env.APPOINTMENT_BASE_URL || "https://example.com").replace(/\/+$/, "");
+// 2026-08-12：fallback 由寫死的 example.com 改為 SITE_URL（會自動採用 Vercel 正式網域）
+const BASE_URL = SITE_URL.replace(/\/+$/, "");
 
 function clean(value: unknown, max: number): string | null {
   const normalized = String(value || "").trim().slice(0, max);

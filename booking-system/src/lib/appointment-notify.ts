@@ -18,10 +18,13 @@ import {
 import type { AppointmentNotificationPurpose, MeetLocation } from "@/lib/appointment";
 import { createAppointmentManageToken } from "@/lib/appointment-token";
 import { db } from "@/lib/db";
-import { OWNER, SOCIAL } from "@/config/owner";
+import { OWNER, SOCIAL, SITE_URL } from "@/config/owner";
 
 const BINGE_EMAIL = process.env.APPOINTMENT_ADMIN_EMAIL || "your-email@example.com";
-const APPOINTMENT_BASE_URL = process.env.APPOINTMENT_BASE_URL || "https://example.com";
+// 2026-08-12：原本 fallback 寫死 https://example.com，導致沒設 APPOINTMENT_BASE_URL 時
+// 客戶收到的「管理預約」「加入行事曆」連結全部指向 example.com（死連結）。
+// 改用 config/owner 的 SITE_URL，它會自動採用 Vercel 注入的正式網域。
+const APPOINTMENT_BASE_URL = SITE_URL;
 const GENDER_HONOR: Record<string, string> = { male: "先生", female: "小姐" };
 const ABIN_PRIVATE_LINE_URL = SOCIAL.line;
 const ABIN_OFFICE_LOCATION: MeetLocation = {

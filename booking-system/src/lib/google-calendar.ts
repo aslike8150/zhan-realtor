@@ -9,6 +9,7 @@
  *   2. 系統擁有者點後台「綁定 Google 日曆」→ 授權同意
  */
 import { db } from "@/lib/db";
+import { SITE_URL } from "@/config/owner";
 import {
   CALENDAR_COLOR_CONFIG_KEY,
   CALENDAR_TITLE_CONFIG_KEY,
@@ -24,7 +25,8 @@ const CAL_API = "https://www.googleapis.com/calendar/v3";
 
 const CLIENT_ID = process.env.GOOGLE_CALENDAR_CLIENT_ID || process.env.AUTH_GOOGLE_ID || "";
 const CLIENT_SECRET = process.env.GOOGLE_CALENDAR_CLIENT_SECRET || process.env.AUTH_GOOGLE_SECRET || "";
-const BASE_URL = process.env.APPOINTMENT_BASE_URL || "https://example.com";
+// 2026-08-12：fallback 由寫死的 example.com 改為 SITE_URL（會自動採用 Vercel 正式網域）
+const BASE_URL = SITE_URL;
 export const GOOGLE_REDIRECT_URI = `${BASE_URL}/api/appointment/google/callback`;
 const SCOPE = "https://www.googleapis.com/auth/calendar.events https://www.googleapis.com/auth/calendar.readonly";
 
