@@ -1136,7 +1136,7 @@ export async function isSlotTaken(slotAt: Date, excludeId?: string): Promise<boo
     `SELECT COUNT(*) AS c
        FROM appointment_slot_lock
       WHERE slot_at = ?
-        AND appointment_id NOT LIKE '__%'
+        AND LEFT(appointment_id, 2) <> '__'
         ${excludeId ? "AND appointment_id <> ?" : ""}`,
     ...(excludeId ? [slotAt, excludeId] : [slotAt]),
   );
@@ -1144,6 +1144,17 @@ export async function isSlotTaken(slotAt: Date, excludeId?: string): Promise<boo
 }
 
 /** 未來已佔時段（給前台算可約空檔扣除）*/
+/**
+ * 已被佔用的時段格（給前台「哪些時段不能選」用）。
+ *
+ * 2026-08-12 修正：原本排除系統標記列的條件寫 `appointment_id NOT LIKE '__%'`，
+ * 但 SQL 的 `_` 是單字元萬用字元，`'__%'` 等於「任何長度 ≥ 2 的字串」——
+ * 32 碼的真實預約 ID 全部命中，於是這個函式永遠回傳空陣列，
+ * 前台把已被預約的時段照樣列出來給客戶選。
+ * 改用 LEFT(...)=='__' 精確比對兩個底線字元，不涉及萬用字元語意。
+ * （真正的雙重預約仍由 appointment_slot_lock 的 PRIMARY KEY 擋住，
+ *   所以這是「選了才被拒」的體驗問題，不是資料被寫壞。）
+ */
 export async function getBookedSlots(from: Date, to: Date): Promise<Date[]> {
   await ensureAppointmentTable();
   const rows = await db.$queryRawUnsafe<{ slot_at: Date }[]>(
@@ -1151,7 +1162,7 @@ export async function getBookedSlots(from: Date, to: Date): Promise<Date[]> {
        FROM appointment_slot_lock
       WHERE slot_at >= ?
         AND slot_at < ?
-        AND appointment_id NOT LIKE '__%'
+        AND LEFT(appointment_id, 2) <> '__'
       ORDER BY slot_at ASC`,
     from,
     to,
