@@ -22,6 +22,7 @@ export function SiteNav({ solid = false }: { solid?: boolean }) {
       <nav className="pv-nav__links">
         <Link href="/#about">關於</Link>
         <Link href="/#service">服務</Link>
+        <Link href="/#listings">物件</Link>
         <Link href="/tools">實用工具</Link>
         <Link href="/#area">區域</Link>
         <Link href="/card/booking">預約</Link>

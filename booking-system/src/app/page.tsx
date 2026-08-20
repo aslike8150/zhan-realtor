@@ -2,7 +2,7 @@
  * / — 詹衒志個人形象官網（首頁）
  *
  * 2026-08-19 換版：從「名片式」改成建設公司質感版（參考華友聯／國泰紅／富都建設）。
- *   滿版暮色大圖 → 引言 → 關於我 → 三項服務 → 數字實績 → 門市與區域 → 預約
+ *   滿版暮色大圖 → 引言 → 關於我 → 三項服務 → 數字實績 → 精選物件 → 門市與區域 → 預約
  *
  * 舊版備份在 src/app/_backup/page-old.tsx（`_` 開頭不會被當成路由），
  * 要退回去就把它搬回這裡、CSS import 改回 "./home.css"。
@@ -15,9 +15,22 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { OWNER, SOCIAL, SITE_URL, LINE_ID_TEXT } from "@/config/owner";
 import { Reveal } from "./Reveal";
+import { FeaturedListings } from "./FeaturedListings";
 import { SiteNav } from "./SiteNav";
 import { SiteFooter } from "./SiteFooter";
 import "./site.css";
+
+/**
+ * 每 30 分鐘重新產生一次首頁。
+ *
+ * 精選物件那段要即時去台灣房屋撈資料，如果不設這個，
+ * 要嘛整頁變成每次請求都動態算（每個訪客都打對方一次，很沒禮貌也很慢），
+ * 要嘛在 build 時固定住（物件永遠不會更新）。
+ *
+ * ⚠️ Next 的 fetch 快取不吃 POST，所以快取只能做在頁面這一層，不要改成
+ *    在 fetch 上加 next.revalidate ── 那個對 POST 沒有作用。
+ */
+export const revalidate = 1800;
 
 const DESCRIPTION = `${OWNER.name}，台南房地產顧問，${OWNER.company}在地專業房仲。從大台南買房、資產配置到房地產稅務諮詢，提供全方位不動產顧問服務。加LINE：${LINE_ID_TEXT} 預約諮詢。`;
 
@@ -323,6 +336,10 @@ export default function HomePage() {
             </Reveal>
           </div>
         </section>
+
+        {/* 4.5 精選物件 —— 即時撈自台灣房屋（員編 OWNER.twhgAgentId）。
+             撈不到會自己整段消失，不會把首頁弄壞。 */}
+        <FeaturedListings />
 
         {/* 5. 服務區域 */}
         <section id="area" className="pv-area">

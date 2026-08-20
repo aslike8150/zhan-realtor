@@ -35,6 +35,14 @@ export const OWNER = {
   licenseNo: "(104)登字第287210號",
   /** 公司／品牌名（含店別） */
   company: "台灣房屋成大東豐店",
+  /**
+   * 台灣房屋的「員編」與「店號」。官網首頁的在售物件是拿這兩個去台灣房屋
+   * 撈回來的（見 src/lib/twhg.ts），改人或換店只要動這裡。
+   *  - agentId：員編。決定「撈誰的物件」→ 只會出現你自己接的案子。
+   *  - storeId：店號。目前只用在「看更多」連到店網的連結。
+   */
+  twhgAgentId: "TD1171",
+  twhgStoreId: "TD52",
   /** 大頭照放 public/card/ 底下 */
   photoUrl: "/card/owner.jpg",
   /** 一句話介紹自己 */
