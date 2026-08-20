@@ -1,0 +1,406 @@
+/**
+ * 實用工具頁的樣式 —— 沿用 site.css 的色票與字體（外層一樣包 .pv）
+ *
+ * 工具頁跟形象頁的任務不同：形象頁要留白要氣氛，工具頁要「看得清楚、按得到」。
+ * 所以這裡的字級與間距都比形象頁緊，手機上尤其。
+ */
+
+.tool-page {
+  padding: 128px 0 clamp(72px, 10vw, 120px);
+  min-height: 70vh;
+}
+
+.tool-head {
+  max-width: 760px;
+  margin-bottom: clamp(36px, 5vw, 56px);
+}
+.tool-head h1 {
+  margin: 0 0 16px;
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(26px, 3.6vw, 40px);
+  letter-spacing: 0.03em;
+}
+.tool-head p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: clamp(14.5px, 1.4vw, 16px);
+  line-height: 2.05;
+}
+
+/* 回上一層 */
+.tool-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  color: var(--ink-faint);
+}
+.tool-back:hover {
+  color: var(--gold);
+}
+
+/* ── 工具總覽的卡片 ─────────────────────────────── */
+
+.tool-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.tool-card {
+  display: block;
+  padding: 36px 30px 32px;
+  border: 1px solid var(--line);
+  background: #fff;
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+.tool-card:hover {
+  border-color: var(--gold);
+  transform: translateY(-4px);
+}
+.tool-card__no {
+  font-family: var(--serif);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--gold);
+}
+.tool-card h2 {
+  margin: 14px 0 12px;
+  font-family: var(--serif);
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+.tool-card p {
+  margin: 0 0 20px;
+  color: var(--ink-soft);
+  font-size: 14.5px;
+  line-height: 2;
+}
+.tool-card__go {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--ink);
+}
+.tool-card--external .tool-card__go::after {
+  content: " ↗";
+}
+
+@media (max-width: 900px) {
+  .tool-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── 試算器版面：左表單、右結果 ───────────────────── */
+
+.calc {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(28px, 4vw, 56px);
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .calc {
+    grid-template-columns: 1fr;
+  }
+}
+
+.calc__form {
+  display: grid;
+  gap: 22px;
+  padding: 32px 28px;
+  border: 1px solid var(--line);
+  background: #fff;
+}
+.calc__field label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+}
+.calc__hint {
+  display: block;
+  margin-top: 6px;
+  font-size: 12.5px;
+  line-height: 1.8;
+  color: var(--ink-faint);
+}
+.calc__input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  background: var(--paper);
+  font-family: inherit;
+  font-size: 16px; /* 16px 以下 iOS Safari 會自動放大整頁 */
+  color: var(--ink);
+}
+.calc__input:focus {
+  outline: none;
+  border-color: var(--gold);
+  background: #fff;
+}
+.calc__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.calc__unit {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.calc__unit span {
+  flex: none;
+  font-size: 13px;
+  color: var(--ink-faint);
+}
+
+/* 預設值按鈕（例如「套用青安 3.0」）：一按就把整組參數填好 */
+.calc__preset {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  padding: 11px 14px;
+  border: 1px solid var(--gold);
+  border-radius: 0;
+  background: transparent;
+  color: var(--gold);
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.calc__preset:hover {
+  background: var(--gold);
+  color: #fff;
+}
+
+/* 滑桿：手機上比打字好用 */
+.calc__range {
+  width: 100%;
+  margin-top: 10px;
+  accent-color: var(--gold);
+}
+
+.calc__check {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 16px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  font-size: 14px;
+  line-height: 1.9;
+  cursor: pointer;
+}
+.calc__check input {
+  margin-top: 5px;
+  flex: none;
+  accent-color: var(--gold);
+}
+.calc__check--off {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ── 結果面板 ────────────────────────────────── */
+
+.calc__result {
+  position: sticky;
+  top: 96px;
+  padding: 34px 30px;
+  background: var(--ink);
+  color: #fff;
+}
+@media (max-width: 900px) {
+  .calc__result {
+    position: static;
+  }
+}
+.calc__headline {
+  padding-bottom: 24px;
+  margin-bottom: 22px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+}
+.calc__headline span {
+  display: block;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.55);
+}
+.calc__headline strong {
+  display: block;
+  margin-top: 10px;
+  font-family: var(--serif);
+  font-size: clamp(32px, 4.4vw, 46px);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+.calc__headline small {
+  font-size: 0.45em;
+  margin-left: 6px;
+  letter-spacing: 0.08em;
+}
+
+.calc__lines {
+  display: grid;
+  gap: 13px;
+  margin: 0;
+  font-size: 14px;
+}
+.calc__lines div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+.calc__lines dt {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.6);
+}
+.calc__lines dd {
+  margin: 0;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.calc__lines .is-strong dt,
+.calc__lines .is-strong dd {
+  color: #fff;
+  font-weight: 700;
+}
+.calc__lines .is-total {
+  margin-top: 8px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.calc__badge {
+  display: inline-block;
+  margin-bottom: 18px;
+  padding: 5px 12px;
+  background: rgba(255, 255, 255, 0.12);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+}
+.calc__badge--warn {
+  background: rgba(255, 116, 3, 0.9);
+}
+
+.calc__note {
+  margin: 24px 0 0;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  font-size: 12.5px;
+  line-height: 1.95;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* 敏感度小表 */
+.calc__table {
+  width: 100%;
+  margin-top: 22px;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  font-variant-numeric: tabular-nums;
+}
+.calc__table th,
+.calc__table td {
+  padding: 9px 4px;
+  text-align: right;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+.calc__table th {
+  color: rgba(255, 255, 255, 0.55);
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+.calc__table th:first-child,
+.calc__table td:first-child {
+  text-align: left;
+}
+.calc__table tr.is-now td {
+  color: var(--brand);
+  font-weight: 700;
+}
+
+/* ── 免責 / 導引 ──────────────────────────────── */
+
+.tool-disclaimer {
+  max-width: 860px;
+  margin-top: clamp(40px, 5vw, 64px);
+  padding: 24px 26px;
+  border-left: 2px solid var(--gold);
+  background: var(--paper-dim);
+  font-size: 13.5px;
+  line-height: 2;
+  color: var(--ink-soft);
+}
+.tool-disclaimer strong {
+  color: var(--ink);
+}
+
+.tool-cta {
+  margin-top: clamp(36px, 5vw, 56px);
+  padding: 32px 30px;
+  border: 1px solid var(--line);
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.tool-cta p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.9;
+}
+.tool-cta strong {
+  font-family: var(--serif);
+  font-size: 18px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* 學區查詢的步驟卡 */
+.tool-steps {
+  display: grid;
+  gap: 18px;
+  margin: 0 0 8px;
+  padding: 0;
+  counter-reset: step;
+  list-style: none;
+}
+/* 🔴 這裡不能用 display:grid。
+   <li> 裡面有純文字節點和 <strong>，grid 會把「每一個子節點」都當成獨立格子，
+   <strong> 就被塞進 34px 寬的編號欄，變成一個字一行的直排。
+   改成相對定位 + 絕對定位的編號，內文才會正常斷行。 */
+.tool-steps li {
+  position: relative;
+  padding-left: 48px;
+  font-size: 15px;
+  line-height: 2;
+}
+.tool-steps li::before {
+  counter-increment: step;
+  content: counter(step, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-family: var(--serif);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+}
