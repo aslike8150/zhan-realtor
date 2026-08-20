@@ -2,16 +2,15 @@
  * 首頁「精選物件」區塊 —— 資料是即時從台灣房屋撈的，不是寫死的。
  *
  * 挑選規則全在 src/config/listings.ts；資料來源在 src/lib/twhg.ts。
- * 撈不到（台灣房屋掛掉、改版、員編改了）就回 null，整段消失，官網照常運作。
- *
- * ⚠️ 這是 Server Component，fetch 跑在伺服器端 —— 台灣房屋那支 API 沒開 CORS，
- *    搬到瀏覽器端會直接被擋。不要改成 "use client"。
+ * 資料來自 src/data/listings.json（由小詹電腦上的 scripts/sync-listings.mjs 產生），
+ * 執行時不對外連線 —— 原因見 src/lib/twhg.ts 檔頭。
+ * 檔案空的話整段消失，官網照常運作。
  */
 
 import Link from "next/link";
 import { OWNER } from "@/config/owner";
 import { NOTES, SHOW_PRICE_DROP, pickFeatured } from "@/config/listings";
-import { fetchAgentListings, type Listing } from "@/lib/twhg";
+import { loadListings, type Listing } from "@/lib/twhg";
 import { Reveal } from "./Reveal";
 
 /** 2430 -> "2,430" */
@@ -27,8 +26,8 @@ function rooms(l: Listing): string | null {
   return parts.join("");
 }
 
-export async function FeaturedListings() {
-  const all = await fetchAgentListings(OWNER.twhgAgentId);
+export function FeaturedListings() {
+  const all = loadListings();
   const featured = pickFeatured(all);
 
   // 一筆都沒有就整段不出現。缺一塊比破一塊好看。

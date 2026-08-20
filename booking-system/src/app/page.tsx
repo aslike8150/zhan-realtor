@@ -20,18 +20,6 @@ import { SiteNav } from "./SiteNav";
 import { SiteFooter } from "./SiteFooter";
 import "./site.css";
 
-/**
- * 每 30 分鐘重新產生一次首頁。
- *
- * 精選物件那段要即時去台灣房屋撈資料，如果不設這個，
- * 要嘛整頁變成每次請求都動態算（每個訪客都打對方一次，很沒禮貌也很慢），
- * 要嘛在 build 時固定住（物件永遠不會更新）。
- *
- * ⚠️ Next 的 fetch 快取不吃 POST，所以快取只能做在頁面這一層，不要改成
- *    在 fetch 上加 next.revalidate ── 那個對 POST 沒有作用。
- */
-export const revalidate = 1800;
-
 const DESCRIPTION = `${OWNER.name}，台南房地產顧問，${OWNER.company}在地專業房仲。從大台南買房、資產配置到房地產稅務諮詢，提供全方位不動產顧問服務。加LINE：${LINE_ID_TEXT} 預約諮詢。`;
 
 export const metadata: Metadata = {
@@ -337,8 +325,8 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* 4.5 精選物件 —— 即時撈自台灣房屋（員編 OWNER.twhgAgentId）。
-             撈不到會自己整段消失，不會把首頁弄壞。 */}
+        {/* 4.5 精選物件 —— 資料來自 src/data/listings.json，
+             用桌面的「更新物件.bat」同步。檔案空的話整段自己消失。 */}
         <FeaturedListings />
 
         {/* 5. 服務區域 */}
