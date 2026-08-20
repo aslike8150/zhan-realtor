@@ -10,6 +10,13 @@
  *    店號 (sid) 撈回來的是整店 300 多筆，放在個人官網上等於幫全店做曝光，
  *    客戶點進來會以為是台灣房屋的頁面。員編撈回來的只有自己接的案子。
  *
+ * ⚠️ 為什麼要送一整組瀏覽器 header（2026-08-20 踩到的）：
+ *    這支 API 前面有 Cloudflare。從小詹家的網路打（住宅 IP）怎麼打都 200，
+ *    但**從 Vercel 機房打會直接回 403**，第一次上線時整段物件就是這樣消失的。
+ *    所以這裡照抄店網自己那支 XHR 的 header 形狀 —— 撈的是小詹自己的員編、
+ *    自己接的案子，加盟總部也同意放個人官網，只是要讓請求長得像正常客戶端。
+ *    改動這幾行之前先想清楚，拿掉很可能又變 403，而且是靜靜地消失。
+
  * ⚠️ 這是台灣房屋的內部介面，沒有版本承諾，他們改版就可能壞掉。
  *    所以壞掉時一律回空陣列，讓首頁那一段整個不顯示 —— 官網其他部分照常。
  *    絕對不要讓它把整頁弄掛。
@@ -32,6 +39,18 @@ const API = "https://store.twhg.com.tw/houseApi/ajax/salesobj.php";
 
 /** 快取多久（秒）。30 分鐘：物件不會分鐘級變動，這個頻率對雙方都合理 */
 const TTL = 1800;
+
+/** 照抄店網那支 XHR 的 header 形狀，理由見檔頭。少一個都可能被 Cloudflare 擋。 */
+const BROWSER_HEADERS: Record<string, string> = {
+  "Content-Type": "application/x-www-form-urlencoded",
+  "User-Agent":
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+  Accept: "application/json, text/plain, */*",
+  "Accept-Language": "zh-TW,zh;q=0.9,en;q=0.8",
+  "X-Requested-With": "XMLHttpRequest",
+  Referer: "https://store.twhg.com.tw/TD52",
+  Origin: "https://store.twhg.com.tw",
+};
 
 /** 物件詳細頁（台灣房屋官網）。我們站上不做內頁，點了就導過去。 */
 const DETAIL = (oid: string) => `https://www.twhg.com.tw/buy/${oid}`;
@@ -130,11 +149,7 @@ async function fetchFresh(agentId: string): Promise<Listing[]> {
   try {
     const res = await fetch(API, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        // 帶 Referer 是禮貌，也讓對方 log 看得出流量從哪來，不是偽裝
-        Referer: "https://zhan-realtor.vercel.app/",
-      },
+      headers: BROWSER_HEADERS,
       // type=1：全部（房屋＋土地＋店面）
       body: new URLSearchParams({ agid: agentId, type: "1" }).toString(),
       // 對方沒回應時不要卡住整個頁面產生流程
@@ -142,7 +157,13 @@ async function fetchFresh(agentId: string): Promise<Listing[]> {
     });
 
     if (!res.ok) {
-      console.warn(`[twhg] salesobj 回 HTTP ${res.status}，本次不顯示物件`);
+      // 被擋的時候把 Cloudflare 的線索一起印出來，否則只看到 403 什麼都查不到
+      console.warn(
+        `[twhg] salesobj 回 HTTP ${res.status}，本次不顯示物件` +
+          ` | cf-ray=${res.headers.get("cf-ray")}` +
+          ` | cf-mitigated=${res.headers.get("cf-mitigated")}` +
+          ` | server=${res.headers.get("server")}`,
+      );
       return [];
     }
 

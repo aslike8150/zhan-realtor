@@ -16,3 +16,5 @@ realtor-website/
 .env.local
 .env*.local
 .env.production
+.vercel
+.env*
