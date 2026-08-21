@@ -1,0 +1,241 @@
+/**
+ * /card 名片頁的版面 —— 設計 token（顏色、字體、按鈕）一律沿用 site.css，
+ * 這裡只放名片頁自己的排版。改配色請改 site.css，不要在這裡另立一套。
+ *
+ * ⚠️ 不要動 _cis.ts。那套橘色 CIS 還在給 /card/booking 的表單與成功頁用，
+ *    改了會波及正在收客戶預約的流程。名片頁改視覺，表單不動。
+ */
+
+.card-page {
+  min-height: 100svh;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  padding: 0 0 56px;
+}
+
+/* 名片是從 LINE 點進來、單手看的東西，寬度壓在一個拇指範圍內 */
+.card-wrap {
+  max-width: 460px;
+  margin: 0 auto;
+  padding: 0 22px;
+}
+
+/* ── 頂部品牌條 ───────────────────────────────── */
+.card-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 22px 0 30px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 34px;
+}
+.card-top img {
+  height: 30px;
+  width: auto;
+}
+.card-top span {
+  font-size: 12.5px;
+  letter-spacing: 0.14em;
+  color: var(--ink-faint);
+}
+
+/* ── 人像 ─────────────────────────────────────── */
+/* 跟首頁「關於我」同一套處理：白底細框、去背人像站在框底。
+   圓形大頭貼是社群語言，這一版整站都是直角。
+   用去背的 person.webp 而不是 owner.jpg —— 後者是白底，貼在暖白色的
+   頁面上會看到一塊突兀的純白方塊。 */
+.card-photo {
+  background: #fff;
+  border: 1px solid var(--line);
+  padding: 26px 20px 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+.card-photo img {
+  width: auto;
+  max-width: 100%;
+  max-height: 330px;
+  object-fit: contain;
+  display: block;
+}
+
+/* ── 姓名與頭銜 ───────────────────────────────── */
+.card-name {
+  margin: 0 0 10px;
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(30px, 9vw, 38px);
+  letter-spacing: 0.06em;
+  line-height: 1.3;
+}
+.card-role {
+  margin: 0;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+  line-height: 1.9;
+}
+
+.card-quote {
+  margin: 26px 0 0;
+  padding-left: 16px;
+  border-left: 2px solid var(--gold);
+  font-family: var(--serif);
+  font-size: 16px;
+  line-height: 2;
+  letter-spacing: 0.02em;
+  color: var(--ink-soft);
+}
+
+/* ── 主要行動 ─────────────────────────────────── */
+.card-cta {
+  display: grid;
+  gap: 12px;
+  margin: 34px 0 0;
+}
+/* 名片頁的按鈕要滿寬，手機才好按（首頁的 pv-btn 是行內寬度） */
+.card-cta .pv-btn {
+  width: 100%;
+  gap: 10px;
+  padding: 17px 20px;
+}
+/* LINE 綠是 LINE 自己的品牌色，不套我們的色票，客戶一眼就認得 */
+.card-cta .card-btn--line {
+  background: #06c755;
+  border-color: #06c755;
+  color: #fff;
+}
+.card-cta .card-btn--line:hover {
+  background: #05a445;
+  border-color: #05a445;
+  color: #fff;
+}
+
+/* ── 分段標題 ─────────────────────────────────── */
+.card-sec {
+  margin-top: 40px;
+  padding-top: 30px;
+  border-top: 1px solid var(--line);
+}
+.card-sec__title {
+  margin: 0 0 18px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* ── 聯絡方式 ─────────────────────────────────── */
+.card-contact {
+  display: grid;
+  gap: 15px;
+}
+.card-contact a,
+.card-contact div {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+}
+.card-contact svg {
+  flex: none;
+  margin-top: 2px;
+  color: var(--gold);
+}
+.card-contact a:hover {
+  color: var(--ink);
+}
+
+/* ── 自助工具 ─────────────────────────────────── */
+/* 名片頁以前是死路：看完聯絡方式就沒了。把三個試算工具帶進來，
+   客戶自己算完發現數字比想像複雜，回頭找人的機率高很多。 */
+.card-tools {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+.card-tool {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 16px 2px;
+  border-bottom: 1px solid var(--line);
+  transition: padding-left 0.2s ease;
+}
+.card-tool:hover {
+  padding-left: 8px;
+}
+/* 最後一條不畫線，不然會跟頁尾的上框線變成兩條平行線 */
+.card-tool:last-child {
+  border-bottom: 0;
+}
+.card-tool strong {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.02em;
+}
+.card-tool small {
+  display: block;
+  margin-top: 5px;
+  font-size: 12.5px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--ink-faint);
+  font-family: var(--sans);
+}
+.card-tool span {
+  flex: none;
+  color: var(--gold);
+  font-size: 15px;
+}
+
+/* ── 頁尾 ─────────────────────────────────────── */
+.card-foot {
+  margin-top: 40px;
+  padding-top: 26px;
+  border-top: 1px solid var(--line);
+  text-align: center;
+  font-size: 12px;
+  line-height: 2.1;
+  color: var(--ink-faint);
+  letter-spacing: 0.04em;
+}
+.card-foot a {
+  color: var(--ink-soft);
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 2px;
+}
+.card-foot a:hover {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+/* ── 社群 ─────────────────────────────────────── */
+.card-social {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 8px;
+}
+.card-social a {
+  width: 46px;
+  height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.card-social a:hover {
+  border-color: var(--ink);
+  background: #fff;
+}

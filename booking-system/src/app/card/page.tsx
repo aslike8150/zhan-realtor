@@ -1,23 +1,42 @@
 /**
- * /card — 衒志房仲日常電子名片門面頁(房仲日常 CIS,專業版)
- * 2026-06-19 改版:真照片 + 官方品牌 icon + 去 emoji + 精緻排版(系統擁有者:要更專業)。
- * robots noindex(個人名片頁、隱私)。
+ * /card — 詹衒志電子名片
+ *
+ * 2026-08-21 第三期改版：從舊的橘色圓角名片風，改成跟首頁同一套建設公司質感
+ * （明體標題、直角、低彩度、橘色只留給主按鈕）。
+ *
+ * ⚠️ 只改這一頁的視覺。`_cis.ts` 那套橘色 CIS 還在給 /card/booking 的表單、
+ *    成功頁、後台與通知信用，動它會波及正在收客戶預約的流程。
+ *
+ * 這頁是客戶加 LINE 之後點進來看的第一眼，所以：
+ *   · 內容一律讀 src/config/owner.ts（透過 _links.ts 的 ABIN），不在這裡寫死
+ *   · robots noindex —— 名片頁不需要被搜尋引擎收錄，SEO 靠首頁
+ *   · 帶上營業員證號（法規要求對外揭露）
+ *   · 結尾要能通到官網與試算工具，不要讓客戶看完聯絡方式就沒路走
  */
 import type { Metadata } from "next";
 import Link from "next/link";
-import type { CSSProperties } from "react";
-import { RCIS } from "./_cis";
 import { SOCIAL, ABIN } from "./_links";
-import { SITE_URL } from "@/config/owner";
-import { FacebookIcon, YoutubeIcon, LineIcon, InstagramIcon, PhoneIcon, MailIcon, PinIcon, CalendarIcon } from "./_icons";
+import { OWNER, SITE_URL, LINE_ID_TEXT } from "@/config/owner";
+import {
+  FacebookIcon,
+  YoutubeIcon,
+  LineIcon,
+  InstagramIcon,
+  PhoneIcon,
+  MailIcon,
+  PinIcon,
+  CalendarIcon,
+} from "./_icons";
+import "../site.css";
+import "./card.css";
 
 const OG_IMAGE = `${SITE_URL}${ABIN.photoUrl}`;
 
 export const metadata: Metadata = {
   title: `${ABIN.name}（${ABIN.alias}）‧ ${ABIN.title} | 預約諮詢`,
-  description: `${ABIN.slogan} 線上預約${ABIN.alias}:買房 / 賣房 / 租賃 / 稅務諮詢,一對一為你服務。`,
+  description: `${ABIN.slogan} 線上預約${ABIN.alias}：買房 / 賣房 / 租賃 / 稅務諮詢，一對一為你服務。`,
   robots: { index: false, follow: false },
-  // OG 鐵律:名片要放本人高光照,不可 fallback 品牌促銷圖
+  // OG 鐵律：名片要放本人高光照，不可 fallback 品牌促銷圖
   openGraph: {
     title: `${ABIN.name}（${ABIN.alias}）‧ ${ABIN.title}`,
     description: `${ABIN.slogan} 線上預約${ABIN.alias}、加 LINE 諮詢買賣租賃。`,
@@ -35,136 +54,136 @@ export const metadata: Metadata = {
   },
 };
 
-function PhotoCircle() {
-  const size = 150;
-  const shared: CSSProperties = {
-    width: size,
-    height: size,
-    borderRadius: "50%",
-    border: "5px solid #fff",
-    boxShadow: "0 8px 26px rgba(28,45,58,0.18)",
-  };
-  if (ABIN.photoUrl) {
-    return (
-      // eslint-disable-next-line @next/next/no-img-element
-      <img src={ABIN.photoUrl} alt={ABIN.name} width={size} height={size} style={{ ...shared, objectFit: "cover", objectPosition: "center" }} />
-    );
-  }
-  return (
-    <div style={{ ...shared, background: `linear-gradient(135deg,${RCIS.sky},${RCIS.skyDeep})`, color: "#fff", fontSize: 46, fontWeight: 800, display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
-      濱
-    </div>
-  );
-}
-
-function ContactRow({ icon, label, href }: { icon: React.ReactNode; label: string; href?: string }) {
-  const inner = (
-    <span style={{ display: "flex", alignItems: "center", gap: 11, fontSize: 15, color: RCIS.inkSoft }}>
-      <span style={{ color: RCIS.sky, display: "inline-flex" }}>{icon}</span>
-      {label}
-    </span>
-  );
-  return href ? (
-    <a href={href} style={{ textDecoration: "none" }}>
-      {inner}
-    </a>
-  ) : (
-    inner
-  );
-}
-
-function SocialBtn({ href, label, children }: { href: string; label: string; children: React.ReactNode }) {
-  // owner.ts 裡留空字串 = 沒有這個社群，不要渲染一顆連到空網址的按鈕
-  if (!href) return null;
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={label}
-      title={label}
-      style={{
-        width: 50,
-        height: 50,
-        borderRadius: 14,
-        background: RCIS.bgSoft,
-        border: `1px solid ${RCIS.border}`,
-        display: "inline-flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      {children}
-    </a>
-  );
-}
+/** 名片頁帶三個試算工具，讓客戶看完名片還有事可做 */
+const TOOLS = [
+  { href: "/tools/tax", title: "房地合一稅試算", desc: "賣掉要繳多少稅，先算清楚" },
+  { href: "/tools/loan", title: "房貸試算", desc: "含青安 3.0 一鍵套用" },
+  { href: "/tools/school", title: "台南學區查詢", desc: "設籍前先確認學區" },
+];
 
 export default function CardPage() {
   return (
-    <main style={{ minHeight: "100vh", background: `linear-gradient(180deg,${RCIS.skySoft},${RCIS.bgSoft})`, fontFamily: RCIS.font, color: RCIS.ink, padding: "32px 16px" }}>
-      <div style={{ maxWidth: 440, margin: "0 auto" }}>
-        <div style={{ background: RCIS.bg, borderRadius: 22, boxShadow: RCIS.shadowLg, overflow: "hidden" }}>
-          {/* cover */}
-          <div style={{ height: 92, background: `linear-gradient(120deg,${RCIS.sky},${RCIS.skyDeep})`, position: "relative" }}>
-            <div style={{ position: "absolute", top: 14, right: 18, fontSize: 12.5, color: "#FFFFFF", letterSpacing: 2, fontWeight: 800 }}>
-              {ABIN.company}
-            </div>
-          </div>
+    <div className="pv card-page">
+      {/* 明體標題是這一版質感的來源。載不到就退回系統字型，版面不會壞 */}
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@500;700&display=swap"
+      />
 
-          {/* 照片 */}
-          <div style={{ marginTop: -78, textAlign: "center", position: "relative", zIndex: 2 }}>
-            <PhotoCircle />
-          </div>
-
-          {/* 名字 */}
-          <div style={{ textAlign: "center", padding: "14px 26px 6px" }}>
-            <div style={{ fontSize: 25, fontWeight: 800, letterSpacing: 0.5 }}>
-              {ABIN.name}
-              <span style={{ color: RCIS.muted, fontSize: 17, fontWeight: 500, marginLeft: 10 }}>{ABIN.alias}</span>
-            </div>
-            <div style={{ fontSize: 15, color: RCIS.inkSoft, marginTop: 6, fontWeight: 500 }}>{ABIN.title}</div>
-            <div style={{ fontSize: 14, color: RCIS.muted, marginTop: 12, lineHeight: 1.7 }}>{ABIN.slogan}</div>
-          </div>
-
-          {/* CTA */}
-          <div style={{ padding: "18px 26px 6px", display: "grid", gap: 11 }}>
-            <Link href="/card/booking" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 9, background: RCIS.orange, color: "#FFFFFF", fontSize: 17, fontWeight: 800, padding: "15px", borderRadius: 13, textDecoration: "none", boxShadow: "0 8px 20px rgba(255,116,3,0.3)" }}>
-              <CalendarIcon size={20} color="#FFFFFF" />
-              線上預約諮詢
-            </Link>
-            <a href={SOCIAL.line} target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 9, background: RCIS.green, color: "#FFFFFF", fontSize: 16, fontWeight: 800, padding: "14px", borderRadius: 13, textDecoration: "none" }}>
-              <LineIcon size={22} />
-              加{ABIN.alias} LINE
-            </a>
-          </div>
-
-          {/* 聯絡 */}
-          <div style={{ padding: "18px 26px", display: "grid", gap: 13, borderTop: `1px solid ${RCIS.line}`, marginTop: 14 }}>
-            <ContactRow icon={<PhoneIcon size={18} />} label={ABIN.phone} href={`tel:${ABIN.phoneRaw}`} />
-            <ContactRow icon={<MailIcon size={18} />} label={ABIN.email} href={`mailto:${ABIN.email}`} />
-            <ContactRow icon={<PinIcon size={18} />} label={ABIN.address} />
-          </div>
-
-          {/* 社群 —— 三個都留空就整塊不顯示，不要留一條空的分隔線 */}
-          {(SOCIAL.fb || SOCIAL.yt || SOCIAL.ig) && (
-            <div style={{ padding: "6px 26px 30px", borderTop: `1px solid ${RCIS.line}` }}>
-              <div style={{ fontSize: 12.5, color: RCIS.muted, margin: "16px 0 13px", textAlign: "center", letterSpacing: 1 }}>追蹤{ABIN.alias}</div>
-              <div style={{ display: "flex", justifyContent: "center", gap: 16 }}>
-                <SocialBtn href={SOCIAL.fb} label="Facebook">
-                  <FacebookIcon size={26} />
-                </SocialBtn>
-                <SocialBtn href={SOCIAL.yt} label="YouTube">
-                  <YoutubeIcon size={26} />
-                </SocialBtn>
-                <SocialBtn href={SOCIAL.ig} label="Instagram">
-                  <InstagramIcon size={26} />
-                </SocialBtn>
-              </div>
-            </div>
-          )}
+      <main className="card-wrap">
+        <div className="card-top">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/home/logo-twh.webp" alt={ABIN.company} />
+          <span>{ABIN.company}</span>
         </div>
-        <div style={{ textAlign: "center", fontSize: 12, color: RCIS.muted, marginTop: 18 }}>© {ABIN.name} ‧ {ABIN.company}</div>
-      </div>
-    </main>
+
+        {/* 頁面上用去背版（跟首頁同一張），OG 縮圖仍用 owner.jpg ——
+            LINE 的預覽縮圖吃白底 JPEG 比較穩，透明 webp 會變成黑底。 */}
+        <div className="card-photo">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/home/person.webp" alt={ABIN.name} />
+        </div>
+
+        <p className="pv-eyebrow">Profile</p>
+        <h1 className="card-name">{ABIN.name}</h1>
+        <p className="card-role">
+          {ABIN.title}｜{ABIN.company}
+          <br />
+          服務區域　{OWNER.serviceArea}
+        </p>
+
+        <blockquote className="card-quote">
+          「最美的路，永遠是回家的路。」
+          <br />
+          先把數字算清楚，再談價格。
+        </blockquote>
+
+        <div className="card-cta">
+          <Link href="/card/booking" className="pv-btn pv-btn--brand">
+            <CalendarIcon size={19} color="#fff" />
+            線上預約諮詢
+          </Link>
+          {SOCIAL.line ? (
+            <a
+              href={SOCIAL.line}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="pv-btn card-btn--line"
+            >
+              <LineIcon size={21} />加 {ABIN.alias} LINE
+            </a>
+          ) : null}
+        </div>
+
+        <section className="card-sec">
+          <p className="card-sec__title">Contact</p>
+          <div className="card-contact">
+            <a href={`tel:${ABIN.phoneRaw}`}>
+              <PhoneIcon size={17} />
+              {ABIN.phone}
+            </a>
+            <a href={`mailto:${ABIN.email}`}>
+              <MailIcon size={17} />
+              {ABIN.email}
+            </a>
+            <div>
+              <PinIcon size={17} />
+              {ABIN.address}
+            </div>
+          </div>
+        </section>
+
+        <section className="card-sec">
+          <p className="card-sec__title">Tools</p>
+          <div className="card-tools">
+            {TOOLS.map((t) => (
+              <Link className="card-tool" href={t.href} key={t.href}>
+                <strong>
+                  {t.title}
+                  <small>{t.desc}</small>
+                </strong>
+                <span aria-hidden="true">→</span>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        {/* 社群 —— 三個都留空就整塊不顯示，不要留一條空的分隔線 */}
+        {SOCIAL.fb || SOCIAL.yt || SOCIAL.ig ? (
+          <section className="card-sec">
+            <p className="card-sec__title">Follow</p>
+            <div className="card-social">
+              {SOCIAL.fb ? (
+                <a href={SOCIAL.fb} target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                  <FacebookIcon size={24} />
+                </a>
+              ) : null}
+              {SOCIAL.yt ? (
+                <a href={SOCIAL.yt} target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                  <YoutubeIcon size={24} />
+                </a>
+              ) : null}
+              {SOCIAL.ig ? (
+                <a href={SOCIAL.ig} target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                  <InstagramIcon size={24} />
+                </a>
+              ) : null}
+            </div>
+          </section>
+        ) : null}
+
+        <div className="card-foot">
+          <Link href="/">看完整官網．在售物件與服務內容 →</Link>
+          <br />
+          {/* 不動產經紀營業員證號：法規要求對外揭露，不要拿掉 */}
+          營業員證號 {OWNER.licenseNo}
+          <br />
+          LINE {LINE_ID_TEXT}
+          <br />© {ABIN.name}・{ABIN.company}
+        </div>
+      </main>
+    </div>
   );
 }
