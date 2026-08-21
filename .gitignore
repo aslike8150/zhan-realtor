@@ -18,3 +18,4 @@ realtor-website/
 .env.production
 .vercel
 .env*
+sync.log

@@ -90,6 +90,11 @@ export function FeaturedListings() {
           ))}
         </div>
 
+        {/* 手機才看得到（CSS 控制）。桌機是網格，沒有東西可滑 */}
+        <p className="pv-listings__swipe" aria-hidden="true">
+          ← 左右滑動看更多 →
+        </p>
+
         <Reveal delay={0.1}>
           <div className="pv-listings__foot">
             {/* 資料是別人家的，講清楚點進去會離開本站，這是基本誠實 */}

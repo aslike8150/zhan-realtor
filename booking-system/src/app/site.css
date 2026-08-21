@@ -602,9 +602,63 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
-@media (max-width: 620px) {
+/* 手機：改成左右滑。
+   六張卡直排要捲很久，橫滑一眼就能瀏覽完，也比較像看物件的樣子。
+   用原生捲動 + scroll-snap，不用 JS 輪播 —— 慣性滑動、無障礙、鍵盤操作
+   都是瀏覽器免費給的，也不必多載一包函式庫。 */
+@media (max-width: 700px) {
   .pv-listings__grid {
-    grid-template-columns: 1fr;
+    grid-auto-flow: column;
+    grid-template-columns: none;
+    /* 89% 是量出來的：這個寬度下，375px 的手機右邊剛好露出下一張約 55px。
+       露太少看不出可以滑，露太多卡片就變小、照片看不清楚。
+       注意這是「扣掉下面 padding 之後」的百分比，不是螢幕寬度的百分比。 */
+    grid-auto-columns: 89%;
+    gap: 14px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    /* 抵銷 pv-wrap 的左右留白，讓卡片能滑到螢幕邊緣；
+       再用自己的 padding 把第一張推回原本的對齊線。 */
+    margin-inline: calc(-1 * clamp(20px, 5vw, 48px));
+    padding-inline: clamp(20px, 5vw, 48px);
+    scroll-padding-inline: clamp(20px, 5vw, 48px);
+    padding-bottom: 4px;
+    scrollbar-width: none;
+  }
+  .pv-listings__grid::-webkit-scrollbar {
+    display: none;
+  }
+  .pv-listings__grid > * {
+    scroll-snap-align: start;
+  }
+  /* 橫滑時後面幾張本來就在畫面外，淡入會變成「滑到才浮現」，
+     快速滑動看起來像破圖。手機直接關掉進場動畫。 */
+  .pv-listings__grid > .pv-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  /* 觸控裝置沒有 hover，但 :hover 會在點擊後黏住，讓卡片在滑動時位移抖動 */
+  .pv-card:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: var(--line);
+  }
+}
+
+/* 滑動提示。桌機是網格，不需要，所以只在手機出現 */
+.pv-listings__swipe {
+  display: none;
+}
+@media (max-width: 700px) {
+  .pv-listings__swipe {
+    display: block;
+    margin: 14px 0 0;
+    text-align: center;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    color: var(--ink-faint);
   }
 }
 

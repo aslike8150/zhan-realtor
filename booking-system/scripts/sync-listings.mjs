@@ -79,6 +79,15 @@ async function main() {
     throw new Error("抓到 0 筆，判定異常，保留原本的 listings.json 不覆蓋。");
   }
 
+  // 物件內容沒變就不要重寫檔案。
+  // ⚠️ 這段不能省：syncedAt 每次都不一樣，照寫的話 git 每天都會看到「檔案有變」，
+  //    於是每天多一個沒意義的 commit、多觸發一次 Vercel 部署。要比的是物件本身。
+  const before = fs.existsSync(OUT) ? JSON.parse(fs.readFileSync(OUT, "utf8")) : null;
+  if (before && JSON.stringify(before.listings) === JSON.stringify(listings)) {
+    console.log(`物件沒有異動（${listings.length} 件），檔案不動。`);
+    return;
+  }
+
   const payload = {
     syncedAt: new Date().toISOString(),
     agentId: AGENT_ID,
