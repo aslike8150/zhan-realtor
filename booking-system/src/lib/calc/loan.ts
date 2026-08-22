@@ -1,8 +1,16 @@
 /**
  * 房貸試算 —— 客戶自助用
  *
- * ⚠️ 公式與 D:\估價建議書 的 src/calc/loan.js 一致（本息平均攤還）。
+ * ⚠️ 本息平均攤還公式在 ./calc-core.js，跟估價建議書買方版同一支函式。
+ *    那個檔是複製過來的副本，要改請改 D:\估價建議書\src\calc\calc-core.js。
+ *
+ * 這個檔只放官網自己要的：青安 3.0、寬限期期滿跳一階的月付、利率敏感度、進場資金。
  */
+
+import { monthlyPayment, round, 服務費率預設 } from "./calc-core.js";
+
+// 沿用原本的匯出介面
+export { monthlyPayment };
 
 /**
  * 青年安心成家購屋優惠貸款 3.0（新青安）—— 2026/8/1 ～ 2029/7/31
@@ -17,6 +25,8 @@
  *
  * 台南屬「其他縣市」，房價上限 2,000 萬。
  * 條件與利率會隨政策與郵局定儲利率調整，最終以承貸銀行公告為準。
+ *
+ * ⚠️ 這一段是官網專有的，估價建議書沒有用到，所以不放進 calc-core。
  */
 export const 青安3 = {
   優惠利率: 1.775,
@@ -30,27 +40,6 @@ export const 青安3 = {
   資格: "年齡未滿 50 歲、年齡＋貸款年限不超過 80、年所得 200 萬以下，且本人、配偶與未成年子女均無自有住宅。由 8 家公股銀行承作。",
   資料日期: "2026-08",
 } as const;
-
-const round = (n: number, d = 0) => {
-  const p = 10 ** d;
-  return Math.round(n * p) / p;
-};
-
-/**
- * 本息平均攤還月付金
- * @param 本金萬 貸款金額（萬元）
- * @param 年利率 例 0.021
- * @param 年期   例 30
- * @returns 月付金（元）
- */
-export function monthlyPayment(本金萬: number, 年利率: number, 年期: number) {
-  const P = 本金萬 * 10000;
-  const r = 年利率 / 12;
-  const n = 年期 * 12;
-  if (n <= 0) return 0;
-  if (r === 0) return P / n;
-  return (P * r * (1 + r) ** n) / ((1 + r) ** n - 1);
-}
 
 export type LoanInput = {
   總價: number;
@@ -85,7 +74,7 @@ export function computeLoan(p: LoanInput) {
     return { 利率: round(r * 100, 2), 月付: m, 差額: m - 月付 };
   });
 
-  const 仲介服務費 = round(p.總價 * (p.買方服務費率 ?? 0.02), 1);
+  const 仲介服務費 = round(p.總價 * (p.買方服務費率 ?? 服務費率預設.買方), 1);
   const 代書費 = p.代書費 ?? 2;
   const 進場資金 = round(自備款 + 仲介服務費 + 代書費, 1);
 
