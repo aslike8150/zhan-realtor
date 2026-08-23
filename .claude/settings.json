@@ -5,7 +5,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"/Users/vy/Desktop/衒志/Agent-OS/.claude/hooks/inject-boards.sh\""
+            "command": "node \"D:/Agent-OS/.claude/hooks/inject-boards.mjs\""
           }
         ]
       }
