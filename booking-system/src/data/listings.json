@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-08-20T14:59:37.216Z",
+  "syncedAt": "2026-08-25T06:35:44.246Z",
   "agentId": "TD1171",
   "agentName": "詹衒志",
   "listings": [
@@ -317,6 +317,21 @@
       "bathroom": 2,
       "photo": "https://img.twhg.com.tw/admin/images/OB01/TD52/TYD000002912869372076a86b13546653.jpg",
       "href": "https://www.twhg.com.tw/buy/TYD0000029"
+    },
+    {
+      "oid": "TD02537661",
+      "name": "CASA｜高樓層2＋1房平車",
+      "city": "台南市",
+      "district": "南區",
+      "type": "大樓",
+      "ping": 41.82,
+      "price": 1380,
+      "priceDown": 0,
+      "bedroom": 2,
+      "livingroom": 2,
+      "bathroom": 2,
+      "photo": "https://img.twhg.com.tw/admin/images/OB01/TD52/TD025376614057154236a8d1c5058cbc.jpg",
+      "href": "https://www.twhg.com.tw/buy/TD02537661"
     }
   ]
 }
