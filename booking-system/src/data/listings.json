@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-08-25T06:35:44.246Z",
+  "syncedAt": "2026-09-01T00:30:06.612Z",
   "agentId": "TD1171",
   "agentName": "詹衒志",
   "listings": [
@@ -62,21 +62,6 @@
       "bathroom": 2,
       "photo": "https://img.twhg.com.tw/admin/images/OB01/TD52/TD023463881711604754689315d78924c.jpg",
       "href": "https://www.twhg.com.tw/buy/TD02346388"
-    },
-    {
-      "oid": "TD02444819",
-      "name": "水交社城心｜兩房平車",
-      "city": "台南市",
-      "district": "南區",
-      "type": "大樓",
-      "ping": 36.75,
-      "price": 1098,
-      "priceDown": 60,
-      "bedroom": 2,
-      "livingroom": 2,
-      "bathroom": 1,
-      "photo": "https://img.twhg.com.tw/admin/images/OB01/TD52/TD02444819213349107166f647b6bb770.jpg",
-      "href": "https://www.twhg.com.tw/buy/TD02444819"
     },
     {
       "oid": "TD02444822",
@@ -317,6 +302,21 @@
       "bathroom": 2,
       "photo": "https://img.twhg.com.tw/admin/images/OB01/TD52/TYD000002912869372076a86b13546653.jpg",
       "href": "https://www.twhg.com.tw/buy/TYD0000029"
+    },
+    {
+      "oid": "TYD0000031",
+      "name": "郡都CITY｜近捷運兩房宅",
+      "city": "高雄市",
+      "district": "前金區",
+      "type": "大樓",
+      "ping": 27.33,
+      "price": 998,
+      "priceDown": 0,
+      "bedroom": 2,
+      "livingroom": 1,
+      "bathroom": 1,
+      "photo": "https://img.twhg.com.tw/admin/images/OB01/TD52/TYD000003113263846626a86b82d683d0.jpg",
+      "href": "https://www.twhg.com.tw/buy/TYD0000031"
     },
     {
       "oid": "TD02537661",
