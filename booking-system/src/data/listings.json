@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-09-01T00:30:06.612Z",
+  "syncedAt": "2026-09-02T00:30:06.543Z",
   "agentId": "TD1171",
   "agentName": "詹衒志",
   "listings": [
@@ -47,6 +47,21 @@
       "bathroom": 3,
       "photo": "https://img.twhg.com.tw/admin/images/OB01/TD52/TD024447171777429308684142821b707.jpg",
       "href": "https://www.twhg.com.tw/buy/TD02444717"
+    },
+    {
+      "oid": "TD02421734",
+      "name": "鄰商60｜春福好好兩房平車",
+      "city": "台南市",
+      "district": "安南區",
+      "type": "大樓",
+      "ping": 29.64,
+      "price": 1188,
+      "priceDown": 0,
+      "bedroom": 2,
+      "livingroom": 2,
+      "bathroom": 1,
+      "photo": "https://img.twhg.com.tw/admin/images/OB01/TD52/TD0242173419627754568491bb066343.jpg",
+      "href": "https://www.twhg.com.tw/buy/TD02421734"
     },
     {
       "oid": "TD02346388",
@@ -332,6 +347,21 @@
       "bathroom": 2,
       "photo": "https://img.twhg.com.tw/admin/images/OB01/TD52/TD025376614057154236a8d1c5058cbc.jpg",
       "href": "https://www.twhg.com.tw/buy/TD02537661"
+    },
+    {
+      "oid": "TD02537670",
+      "name": "一字寬｜高樓兩房兩衛平移車",
+      "city": "台南市",
+      "district": "安南區",
+      "type": "大樓",
+      "ping": 30.36,
+      "price": 1055,
+      "priceDown": 0,
+      "bedroom": 2,
+      "livingroom": 2,
+      "bathroom": 2,
+      "photo": "https://img.twhg.com.tw/admin/images/OB01/TD52/TD025376708972119806a967b196b2c1.jpg",
+      "href": "https://www.twhg.com.tw/buy/TD02537670"
     }
   ]
 }
