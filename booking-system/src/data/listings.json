@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-09-09T00:30:07.712Z",
+  "syncedAt": "2026-09-11T00:30:02.658Z",
   "agentId": "TD1171",
   "agentName": "詹衒志",
   "listings": [
@@ -152,6 +152,21 @@
       "bathroom": 2,
       "photo": "https://img.twhg.com.tw/admin/images/OB01/TD52/TD0240804968529687669bb96d5d4416.jpg",
       "href": "https://www.twhg.com.tw/buy/TD02408049"
+    },
+    {
+      "oid": "TD02447751",
+      "name": "鄰逢甲大學｜收租陽台金套房",
+      "city": "台中市",
+      "district": "西屯區",
+      "type": "套房",
+      "ping": 9.43,
+      "price": 458,
+      "priceDown": 30,
+      "bedroom": 1,
+      "livingroom": 0,
+      "bathroom": 1,
+      "photo": "https://img.twhg.com.tw/admin/images/OB01/TD52/TD0244775166884861169e1fad2a809f.jpg",
+      "href": "https://www.twhg.com.tw/buy/TD02447751"
     },
     {
       "oid": "TD02447752",
@@ -325,8 +340,8 @@
       "district": "南區",
       "type": "大樓",
       "ping": 41.82,
-      "price": 1380,
-      "priceDown": 0,
+      "price": 1298,
+      "priceDown": 82,
       "bedroom": 2,
       "livingroom": 2,
       "bathroom": 2,
