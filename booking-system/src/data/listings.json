@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-09-11T00:30:02.658Z",
+  "syncedAt": "2026-09-18T00:30:01.920Z",
   "agentId": "TD1171",
   "agentName": "詹衒志",
   "listings": [
@@ -145,8 +145,8 @@
       "district": "中西區",
       "type": "大樓",
       "ping": 31.08,
-      "price": 1098,
-      "priceDown": 0,
+      "price": 1058,
+      "priceDown": 40,
       "bedroom": 2,
       "livingroom": 2,
       "bathroom": 2,
@@ -280,8 +280,8 @@
       "district": "東區",
       "type": "大樓",
       "ping": 47.62,
-      "price": 2430,
-      "priceDown": 0,
+      "price": 2358,
+      "priceDown": 72,
       "bedroom": 3,
       "livingroom": 2,
       "bathroom": 2,
