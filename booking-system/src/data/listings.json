@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-09-18T00:30:01.920Z",
+  "syncedAt": "2026-09-22T00:30:01.995Z",
   "agentId": "TD1171",
   "agentName": "詹衒志",
   "listings": [
@@ -137,21 +137,6 @@
       "bathroom": 1,
       "photo": "https://img.twhg.com.tw/admin/images/OB01/TD52/TD024415922099484930698d6414c7e9b.jpg",
       "href": "https://www.twhg.com.tw/buy/TD02441592"
-    },
-    {
-      "oid": "TD02408049",
-      "name": "鑫左岸｜二房車位｜拎包入住",
-      "city": "台南市",
-      "district": "中西區",
-      "type": "大樓",
-      "ping": 31.08,
-      "price": 1058,
-      "priceDown": 40,
-      "bedroom": 2,
-      "livingroom": 2,
-      "bathroom": 2,
-      "photo": "https://img.twhg.com.tw/admin/images/OB01/TD52/TD0240804968529687669bb96d5d4416.jpg",
-      "href": "https://www.twhg.com.tw/buy/TD02408049"
     },
     {
       "oid": "TD02447751",
