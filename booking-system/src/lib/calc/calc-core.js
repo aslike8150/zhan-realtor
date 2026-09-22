@@ -129,6 +129,8 @@ export function holdingFrom(取得日, asOf) {
  * @property {number}      [服務費率]       預設 4%（賣方）
  * @property {number}      [服務費]         直接給則覆寫服務費率算出來的值（萬）
  * @property {number}      [代書費]         萬
+ * @property {number}      [履保費]         萬；直接給則覆寫履保費率算出來的值
+ * @property {number}      [履保費率]       佔售價的比例，例如 0.0003（萬分之 3）
  * @property {number}      [裝潢修繕]       萬
  * @property {number|null} [土地漲價總數額]  萬；null 表示待查
  * @property {number|null} [土地增值稅]      萬；null 表示待查
@@ -148,6 +150,7 @@ export function holdingFrom(取得日, asOf) {
  *   服務費率       預設 4%（賣方）
  *   服務費         直接給則覆寫服務費率算出來的值（萬）
  *   代書費         萬，預設 0
+ *   履保費／履保費率 履約保證費。給金額就用金額，給費率就用「售價 × 費率」，兩個都沒給是 0
  *   裝潢修繕       有單據可列必要費用（萬），預設 0
  *   土地漲價總數額  萬；null 表示待查（不扣，結果要標「未計入」）
  *   土地增值稅      萬；null 表示待查
@@ -159,11 +162,15 @@ export function taxScenario(p) {
   const 售價 = p.售價;
   const 服務費 = p.服務費 ?? round(售價 * (p.服務費率 ?? 服務費率預設.賣方), 1);
   const 代書費 = p.代書費 ?? 0;
+  // 履約保證費：實務上按成交總價抽萬分之幾（小詹 2026-09-01 確認是萬分之 3）。給金額就用金額，沒給就用費率算。
+  // ⚠️ 預設 0 —— 不是每個案子都走履保，也不要讓官網那份的既有數字被動到。
+  const 履保費 = p.履保費 ?? round(售價 * (p.履保費率 ?? 0), 1);
   const 裝潢修繕 = p.裝潢修繕 ?? 0;
   const 土地漲價 = p.土地漲價總數額 ?? 0;
   const 土增稅 = p.土地增值稅 ?? 0;
 
-  const 必要費用 = round(服務費 + 代書費 + 裝潢修繕, 1);
+  // 代書費與履保費都是移轉時支付的費用，可以列舉為必要費用抵掉課稅所得
+  const 必要費用 = round(服務費 + 代書費 + 履保費 + 裝潢修繕, 1);
   const 課稅所得 = round(Math.max(售價 - p.取得成本 - 必要費用 - 土地漲價, 0), 1);
 
   const 自用 = p.自用優惠 === true;
@@ -173,7 +180,7 @@ export function taxScenario(p) {
     ? Math.max(課稅所得 - SELF_USE.exemptionWan, 0) * SELF_USE.rate
     : 課稅所得 * 稅率, 1);
 
-  const 稅後實拿 = round(售價 - 服務費 - 代書費 - 房地合一稅 - 土增稅, 1);
+  const 稅後實拿 = round(售價 - 服務費 - 代書費 - 履保費 - 房地合一稅 - 土增稅, 1);
   const 真正入袋 = p.貸款餘額 != null ? round(稅後實拿 - p.貸款餘額, 1) : null;
 
   return {
@@ -181,6 +188,7 @@ export function taxScenario(p) {
     取得成本: round(p.取得成本, 1),
     服務費: round(服務費, 1),
     代書費: round(代書費, 1),
+    履保費: round(履保費, 1),
     裝潢修繕: round(裝潢修繕, 1),
     必要費用: round(必要費用, 1),
     土地漲價總數額: p.土地漲價總數額 == null ? null : round(土地漲價, 1),
