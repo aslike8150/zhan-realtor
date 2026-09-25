@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-09-22T00:30:01.995Z",
+  "syncedAt": "2026-09-25T00:30:02.160Z",
   "agentId": "TD1171",
   "agentName": "詹衒志",
   "listings": [
@@ -347,6 +347,21 @@
       "bathroom": 2,
       "photo": "https://img.twhg.com.tw/admin/images/OB01/TD52/TD025376708972119806a967b196b2c1.jpg",
       "href": "https://www.twhg.com.tw/buy/TD02537670"
+    },
+    {
+      "oid": "TD02331410",
+      "name": "元翰門｜朝南海景雙車宅",
+      "city": "台南市",
+      "district": "安平區",
+      "type": "大樓",
+      "ping": 103.61,
+      "price": 3980,
+      "priceDown": 0,
+      "bedroom": 3,
+      "livingroom": 2,
+      "bathroom": 4,
+      "photo": "https://img.twhg.com.tw/admin/images/OB01/TD52/TD023314109414860596ab4b915e4bc1.jpg",
+      "href": "https://www.twhg.com.tw/buy/TD02331410"
     }
   ]
 }
