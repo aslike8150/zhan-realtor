@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-09-25T00:30:02.160Z",
+  "syncedAt": "2026-10-03T00:30:02.627Z",
   "agentId": "TD1171",
   "agentName": "詹衒志",
   "listings": [
@@ -139,6 +139,21 @@
       "href": "https://www.twhg.com.tw/buy/TD02441592"
     },
     {
+      "oid": "TD02408049",
+      "name": "鑫左岸｜二房車位｜拎包入住",
+      "city": "台南市",
+      "district": "中西區",
+      "type": "大樓",
+      "ping": 31.08,
+      "price": 1058,
+      "priceDown": 40,
+      "bedroom": 2,
+      "livingroom": 2,
+      "bathroom": 2,
+      "photo": "https://img.twhg.com.tw/admin/images/OB01/TD52/TD0240804968529687669bb96d5d4416.jpg",
+      "href": "https://www.twhg.com.tw/buy/TD02408049"
+    },
+    {
       "oid": "TD02447751",
       "name": "鄰逢甲大學｜收租陽台金套房",
       "city": "台中市",
@@ -242,21 +257,6 @@
       "bathroom": 0,
       "photo": "https://img.twhg.com.tw/admin/images/OB01/TD52/TD1240694919897882016a38fa4674c50.jpg",
       "href": "https://www.twhg.com.tw/buy/TD12406949"
-    },
-    {
-      "oid": "TD02447753",
-      "name": "雙城計畫區｜7米面寬雙店住宅",
-      "city": "台南市",
-      "district": "中西區",
-      "type": "透天別墅",
-      "ping": 49.37,
-      "price": 2380,
-      "priceDown": 0,
-      "bedroom": 4,
-      "livingroom": 2,
-      "bathroom": 3,
-      "photo": "https://img.twhg.com.tw/admin/images/OB01/TD52/TD024477532967612856a4626bb25f31.jpg",
-      "href": "https://www.twhg.com.tw/buy/TD02447753"
     },
     {
       "oid": "TD02156971",
