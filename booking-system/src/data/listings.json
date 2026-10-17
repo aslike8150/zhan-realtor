@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-10-06T00:30:02.133Z",
+  "syncedAt": "2026-10-17T00:30:02.362Z",
   "agentId": "TD1171",
   "agentName": "詹衒志",
   "listings": [
@@ -304,29 +304,14 @@
       "href": "https://www.twhg.com.tw/buy/TYD0000029"
     },
     {
-      "oid": "TYD0000031",
-      "name": "郡都CITY｜近捷運兩房宅",
-      "city": "高雄市",
-      "district": "前金區",
-      "type": "大樓",
-      "ping": 27.33,
-      "price": 938,
-      "priceDown": 60,
-      "bedroom": 2,
-      "livingroom": 1,
-      "bathroom": 1,
-      "photo": "https://img.twhg.com.tw/admin/images/OB01/TD52/TYD000003113263846626a86b82d683d0.jpg",
-      "href": "https://www.twhg.com.tw/buy/TYD0000031"
-    },
-    {
       "oid": "TD02537661",
       "name": "CASA｜高樓層2＋1房平車",
       "city": "台南市",
       "district": "南區",
       "type": "大樓",
       "ping": 41.82,
-      "price": 1298,
-      "priceDown": 82,
+      "price": 1198,
+      "priceDown": 182,
       "bedroom": 2,
       "livingroom": 2,
       "bathroom": 2,
