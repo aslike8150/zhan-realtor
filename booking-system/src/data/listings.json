@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-10-17T00:30:02.362Z",
+  "syncedAt": "2026-10-20T00:30:02.376Z",
   "agentId": "TD1171",
   "agentName": "詹衒志",
   "listings": [
@@ -332,6 +332,36 @@
       "bathroom": 2,
       "photo": "https://img.twhg.com.tw/admin/images/OB01/TD52/TD025376708972119806a967b196b2c1.jpg",
       "href": "https://www.twhg.com.tw/buy/TD02537670"
+    },
+    {
+      "oid": "TD02236673",
+      "name": "鄰慈濟高中｜五房露台雙車墅",
+      "city": "台南市",
+      "district": "安平區",
+      "type": "透天別墅",
+      "ping": 97.2,
+      "price": 1698,
+      "priceDown": 0,
+      "bedroom": 5,
+      "livingroom": 2,
+      "bathroom": 5,
+      "photo": "https://img.twhg.com.tw/admin/images/OB01/TD52/TD022366736230339176ad5b20fa3f06.jpg",
+      "href": "https://www.twhg.com.tw/buy/TD02236673"
+    },
+    {
+      "oid": "TD02346475",
+      "name": "遠雄頂美｜次頂景觀兩房平車",
+      "city": "台南市",
+      "district": "中西區",
+      "type": "大樓",
+      "ping": 34.67,
+      "price": 1498,
+      "priceDown": 0,
+      "bedroom": 2,
+      "livingroom": 2,
+      "bathroom": 1,
+      "photo": "https://img.twhg.com.tw/admin/images/OB01/TD52/TD023464751727742536ad5c1991aff1.jpg",
+      "href": "https://www.twhg.com.tw/buy/TD02346475"
     }
   ]
 }
