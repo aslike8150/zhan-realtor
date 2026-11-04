@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-11-01T00:30:02.334Z",
+  "syncedAt": "2026-11-04T00:30:06.411Z",
   "agentId": "TD1171",
   "agentName": "詹衒志",
   "listings": [
@@ -347,6 +347,21 @@
       "bathroom": 1,
       "photo": "https://img.twhg.com.tw/admin/images/OB01/TD52/TD023464751727742536ad5c1991aff1.jpg",
       "href": "https://www.twhg.com.tw/buy/TD02346475"
+    },
+    {
+      "oid": "TD02346470",
+      "name": "桂花鄉｜次頂樓三改二房含車",
+      "city": "台南市",
+      "district": "北區",
+      "type": "大樓",
+      "ping": 34.61,
+      "price": 988,
+      "priceDown": 0,
+      "bedroom": 2,
+      "livingroom": 2,
+      "bathroom": 2,
+      "photo": "https://img.twhg.com.tw/admin/images/OB01/TD52/TD0234647018413236056ae99f4580798.jpg",
+      "href": "https://www.twhg.com.tw/buy/TD02346470"
     }
   ]
 }
