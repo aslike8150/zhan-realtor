@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-11-05T00:30:02.186Z",
+  "syncedAt": "2026-11-06T00:30:02.134Z",
   "agentId": "TD1171",
   "agentName": "詹衒志",
   "listings": [
@@ -197,6 +197,21 @@
       "bathroom": 2,
       "photo": "https://img.twhg.com.tw/admin/images/OB01/TD52/TD023463881711604754689315d78924c.jpg",
       "href": "https://www.twhg.com.tw/buy/TD02346388"
+    },
+    {
+      "oid": "TD02444822",
+      "name": "復興學區｜無遮蔽朝北四房",
+      "city": "台南市",
+      "district": "東區",
+      "type": "大樓",
+      "ping": 44.18,
+      "price": 1058,
+      "priceDown": 100,
+      "bedroom": 4,
+      "livingroom": 2,
+      "bathroom": 2,
+      "photo": "https://img.twhg.com.tw/admin/images/OB01/TD52/TD02444822194935387967eb70f70338a.jpg",
+      "href": "https://www.twhg.com.tw/buy/TD02444822"
     },
     {
       "oid": "TD02441579",
