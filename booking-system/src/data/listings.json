@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-11-09T00:30:02.230Z",
+  "syncedAt": "2026-11-10T00:30:02.359Z",
   "agentId": "TD1171",
   "agentName": "詹衒志",
   "listings": [
@@ -497,6 +497,21 @@
       "bathroom": 2,
       "photo": "https://img.twhg.com.tw/admin/images/OB01/TD52/TD0234647018413236056ae99f4580798.jpg",
       "href": "https://www.twhg.com.tw/buy/TD02346470"
+    },
+    {
+      "oid": "TD02537821",
+      "name": "佳鋐郡｜景觀三房平車",
+      "city": "台南市",
+      "district": "北區",
+      "type": "大樓",
+      "ping": 42.64,
+      "price": 1698,
+      "priceDown": 0,
+      "bedroom": 3,
+      "livingroom": 2,
+      "bathroom": 2,
+      "photo": "https://img.twhg.com.tw/admin/images/OB01/TD52/TD0253782111475756046af18c44cdbc7.jpg",
+      "href": "https://www.twhg.com.tw/buy/TD02537821"
     }
   ]
 }
