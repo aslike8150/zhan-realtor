@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-11-10T00:30:02.359Z",
+  "syncedAt": "2026-11-11T00:30:02.399Z",
   "agentId": "TD1171",
   "agentName": "詹衒志",
   "listings": [
@@ -47,6 +47,21 @@
       "bathroom": 1,
       "photo": "https://img.twhg.com.tw/admin/images/OB01/TD52/TD02444637961469073682309a6a4050.jpg",
       "href": "https://www.twhg.com.tw/buy/TD02444637"
+    },
+    {
+      "oid": "TD02444638",
+      "name": "三發夢世代｜金店面S6",
+      "city": "台南市",
+      "district": "永康區",
+      "type": "大樓",
+      "ping": 43,
+      "price": 2980,
+      "priceDown": 108,
+      "bedroom": 1,
+      "livingroom": 0,
+      "bathroom": 1,
+      "photo": "https://img.twhg.com.tw/admin/images/OB01/TD52/TD024446387421440686823fe300ce79.jpg",
+      "href": "https://www.twhg.com.tw/buy/TD02444638"
     },
     {
       "oid": "TD02444717",
@@ -445,8 +460,8 @@
       "district": "安南區",
       "type": "大樓",
       "ping": 30.36,
-      "price": 1055,
-      "priceDown": 0,
+      "price": 1035,
+      "priceDown": 20,
       "bedroom": 2,
       "livingroom": 2,
       "bathroom": 2,
