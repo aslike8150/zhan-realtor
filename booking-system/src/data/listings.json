@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-11-12T00:30:02.416Z",
+  "syncedAt": "2026-11-13T00:30:02.308Z",
   "agentId": "TD1171",
   "agentName": "詹衒志",
   "listings": [
@@ -197,6 +197,21 @@
       "bathroom": 1,
       "photo": "https://img.twhg.com.tw/admin/images/OB01/TD52/TD02444758537446590684a7c255b665.jpg",
       "href": "https://www.twhg.com.tw/buy/TD02444758"
+    },
+    {
+      "oid": "TD02346372",
+      "name": "鑫左岸市府兩房兩衛車",
+      "city": "台南市",
+      "district": "中西區",
+      "type": "大樓",
+      "ping": 31.08,
+      "price": 998,
+      "priceDown": 200,
+      "bedroom": 2,
+      "livingroom": 2,
+      "bathroom": 2,
+      "photo": "https://img.twhg.com.tw/admin/images/OB01/TD52/TD0234637215738641536879f44292bd3.jpg",
+      "href": "https://www.twhg.com.tw/buy/TD02346372"
     },
     {
       "oid": "TD02346388",
