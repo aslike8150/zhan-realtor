@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-11-13T00:30:02.308Z",
+  "syncedAt": "2026-11-14T00:30:02.744Z",
   "agentId": "TD1171",
   "agentName": "詹衒志",
   "listings": [
@@ -542,6 +542,21 @@
       "bathroom": 2,
       "photo": "https://img.twhg.com.tw/admin/images/OB01/TD52/TD0253782111475756046af18c44cdbc7.jpg",
       "href": "https://www.twhg.com.tw/buy/TD02537821"
+    },
+    {
+      "oid": "TYD0000040",
+      "name": "MY鑫光｜景觀邊間兩房含車",
+      "city": "台南市",
+      "district": "安平區",
+      "type": "大樓",
+      "ping": 31.25,
+      "price": 858,
+      "priceDown": 0,
+      "bedroom": 2,
+      "livingroom": 1,
+      "bathroom": 1,
+      "photo": "https://img.twhg.com.tw/admin/images/OB01/TD52/TYD000004020384671686af6a86762ea7.jpg",
+      "href": "https://www.twhg.com.tw/buy/TYD0000040"
     }
   ]
 }
