@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-11-17T00:30:02.408Z",
+  "syncedAt": "2026-11-26T00:30:02.719Z",
   "agentId": "TD1171",
   "agentName": "詹衒志",
   "listings": [
@@ -90,7 +90,7 @@
       "bedroom": 3,
       "livingroom": 2,
       "bathroom": 2,
-      "photo": "https://img.twhg.com.tw/admin/images/OB01/TD52/TD024446264341317786847e6c3f2e13.jpg",
+      "photo": "https://img.twhg.com.tw/admin/images/OB01/TD52/TD024446265416112386b0650db8e8e4.jpg",
       "href": "https://www.twhg.com.tw/buy/TD02444626"
     },
     {
@@ -400,8 +400,8 @@
       "district": "安南區",
       "type": "大樓",
       "ping": 36.46,
-      "price": 958,
-      "priceDown": 30,
+      "price": 898,
+      "priceDown": 90,
       "bedroom": 2,
       "livingroom": 2,
       "bathroom": 2,
@@ -527,6 +527,21 @@
       "bathroom": 1,
       "photo": "https://img.twhg.com.tw/admin/images/OB01/TD52/TYD000004020384671686af6a86762ea7.jpg",
       "href": "https://www.twhg.com.tw/buy/TYD0000040"
+    },
+    {
+      "oid": "TD02537673",
+      "name": "麻豆滿築｜全新實品屋雙車墅",
+      "city": "台南市",
+      "district": "麻豆區",
+      "type": "透天別墅",
+      "ping": 69.72,
+      "price": 1858,
+      "priceDown": 0,
+      "bedroom": 4,
+      "livingroom": 2,
+      "bathroom": 4,
+      "photo": "https://img.twhg.com.tw/admin/images/OB01/TD52/TD0253767318991671856b067932cef9b.jpg",
+      "href": "https://www.twhg.com.tw/buy/TD02537673"
     }
   ]
 }
